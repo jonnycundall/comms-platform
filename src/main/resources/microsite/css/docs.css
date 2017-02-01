@@ -1,0 +1,22 @@
+.nav .container-fluid .row .pull-right {
+  display: none;
+}
+
+#sidebar-wrapper {
+  background-image: linear-gradient(135deg,#79ba10 0,#24911d 100%);
+  background-image: url("../img/jumbotron_pattern.png");
+  background-color: #24911d;
+  background-size: cover;
+}
+
+.sidebar-nav > .sidebar-brand a, .sidebar-nav > .sidebar-brand a:hover {
+  background: unset;
+}
+
+.sidebar-nav > li a.active {
+  border-left: 3px solid #fff;
+}
+
+.sidebar-nav > li a:hover {
+  background: rgba(255, 255, 255, .12);
+}
