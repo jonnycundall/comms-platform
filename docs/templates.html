@@ -1,0 +1,134 @@
+<html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>OVO Comms Platform</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="comms-platform" /><meta name="author" content="Comms team" /><meta name="og:image" content="/comms-platform/img/poster.png" /><meta name="og:title" content="OVO Comms Platform" /><meta name="og:site_name" content="OVO Comms Platform" /><meta name="og:url" content="https://ovoenergy.slack.com/messages/hello_comms/" /><meta name="og:type" content="website" /><meta name="og:description" content="comms-platform" /><meta name="twitter:image" content="/comms-platform/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/comms-platform/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/comms-platform/highlight/styles/default.css" /><link rel="stylesheet" href="/comms-platform/css/style.css" /><link rel="stylesheet" href="/comms-platform/css/palette.css" /><link rel="stylesheet" href="/comms-platform/css/docs.css" /><link rel="stylesheet" href="/comms-platform/css/home.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><ul id="sidebar" class="sidebar-nav"><li class="sidebar-brand"><a href="/comms-platform/" class="brand"><div class="brand-wrapper" style="background:url('/comms-platform/img/sidebar_brand.png') no-repeat"><span>OVO Comms Platform</span></div></a></li> <li><a href="/comms-platform/docs/index.html" class="">Getting Started</a></li> <li><a href="/comms-platform/docs/templates.html" class=" active ">Templates</a></li> <li><a href="/comms-platform/docs/events.html" class="">Events</a></li></ul></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-eye"></i><span>WATCH<span id="eyes" class="label label-default">--</span></span></a></li><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-star-o"></i><span>STARS<span id="stars" class="label label-default">--</span></span></a></li><li><a href="#" onclick="shareSiteTwitter('OVO Comms Platform comms-platform');"><i class="fa fa-twitter"></i></a></li><li><a href="#" onclick="shareSiteFacebook('OVO Comms Platform comms-platform');"><i class="fa fa-facebook"></i></a></li><li><a href="#" onclick="shareSiteGoogle();"><i class="fa fa-google-plus"></i></a></li></ul></div></div></div></div><div id="content" data-github-owner="ovotech" data-github-repo="comms-platform"><div class="content-wrapper"><section><h1 id="templates">Templates</h1>
+
+<p>In order to send comms, you will need a template.</p>
+
+<h2 id="directory-structure">Directory structure</h2>
+
+<p>A comm template is a directory on S3 that adheres to the following structure.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;comm-type&gt;/
+  &lt;comm-name&gt;/
+    &lt;version&gt;/
+      email/
+        subject.txt
+        body.html
+        body.txt (optional)
+        sender.txt (optional)
+</code></pre>
+</div>
+
+<p>Let’s go through some of that terminology.</p>
+
+<h3 id="comm-type">comm-type</h3>
+
+<p>Comms are broadly categorised by their type. The main reason for doing this is so that different comms of the same type can share things like a common header and footer, in order to provide a consistent look and feel.</p>
+
+<p>The currently supported categories are <code class="highlighter-rouge">Service</code>, <code class="highlighter-rouge">Regulatory</code> and <code class="highlighter-rouge">Marketing</code>.</p>
+
+<h3 id="comm-name">comm-name</h3>
+
+<p>This is the unique name for your comm. It’s an arbitrary string that you get to decide.</p>
+
+<h3 id="version">version</h3>
+
+<p>Templates are versioned, and every published version of a comm is immutable. So if you want to make any changes to a comm template, you will need to publish a new version.</p>
+
+<h3 id="channels">Channels</h3>
+
+<p>Currently email is our only supported channel, so you must provide an email template. In future, when we add support for SMS and other channels, you will be able to include different templates for each channel that you want to use.</p>
+
+<h4 id="email">Email</h4>
+
+<p>An email template consists of up to four files:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">subject.txt</code> is a Handlebars template for the email subject</li>
+  <li><code class="highlighter-rouge">body.html</code> is a Handlebars template for the HTML body</li>
+  <li><code class="highlighter-rouge">body.txt</code> is a Handlebars template for the text body. This file is optional. If it is present, your comm will be sent as a multipart email with both HTML and text bodies.</li>
+  <li><code class="highlighter-rouge">sender.txt</code> is a custom sender in the format <code class="highlighter-rouge">Name &lt;custom.address@ovoenergy.com&gt;</code>. This file is optional. If it is not present, a default sender will be used.</li>
+</ul>
+
+<h2 id="handlebars-syntax">Handlebars syntax</h2>
+
+<p>We support a subset of <a href="http://handlebarsjs.com/">Handlebars</a> syntax for templates.</p>
+
+<p>As well as plain old Mustache-style placeholders (<code class="highlighter-rouge"><span class="p">{</span><span class="err">{foo</span><span class="p">}</span><span class="err">}</span></code>), you can also write conditionals using <code class="highlighter-rouge"><span class="p">{</span><span class="err">{#if</span><span class="w"> </span><span class="err">foo</span><span class="p">}</span><span class="err">}</span></code>, and you can loop through lists of things using <code class="highlighter-rouge"><span class="p">{</span><span class="err">{#each</span><span class="w"> </span><span class="err">things</span><span class="p">}</span><span class="err">}</span></code>.</p>
+
+<h3 id="built-in-data">Built-in data</h3>
+
+<p>The following fields are provided automatically for you to refer to in your templates:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">profile.firstName</code></li>
+  <li><code class="highlighter-rouge">profile.lastName</code></li>
+  <li><code class="highlighter-rouge">recipient.emailAddress</code> (only available in email templates, not in other channels)</li>
+  <li><code class="highlighter-rouge">system.year</code></li>
+  <li><code class="highlighter-rouge">system.month</code></li>
+  <li><code class="highlighter-rouge">system.dayOfMonth</code></li>
+</ul>
+
+<p>We can add more of these fields if necessary. If you would like a new field added, please get in touch.</p>
+
+<h3 id="simple-example-template">Simple example template</h3>
+
+<p>Here’s a hypothetical HTML email body template:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;p&gt;Hello {{profile.firstName}} {{profile.lastName}}!&lt;/p&gt;
+
+&lt;p&gt;Thanks for doing that thing you just did. The result was: {{result}}.&lt;/p&gt;
+
+&lt;p&gt;Here's another piece of data you might find useful: {{thing}}.&lt;p&gt;
+</code></pre>
+</div>
+
+<p>In this case, <code class="highlighter-rouge">profile.firstName</code> and <code class="highlighter-rouge">profile.lastName</code> are provided automatically, so you would need to provide the values of <code class="highlighter-rouge">result</code> and <code class="highlighter-rouge">thing</code> in your Kafka event when you trigger a comm. See the <a href="events.html">Events</a> page for more details of how this is done.</p>
+
+<h3 id="more-complex-example">More complex example</h3>
+
+<p>Here’s another hypothetical example that includes conditionals and loops:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;p&gt;Hello. Please give us your meter reads.&lt;/p&gt;
+
+{{#if gas}}
+  &lt;div&gt;
+  We need reads for the following gas meters:
+
+  &lt;ul&gt;
+  {{#each gas.meters}}
+    &lt;li&gt;{{this.meterNumber}}&lt;/li&gt;
+  {{/each}}
+  &lt;/ul&gt;
+
+  &lt;/div&gt;
+{{/if}}
+
+{{#if electricity}}
+  &lt;div&gt;
+  We need reads for the following electricity meters:
+
+  &lt;ul&gt;
+  {{#each electricity.meters}}
+    &lt;li&gt;{{this.firstNumber}} {{this.secondNumber}}&lt;/li&gt; 
+  {{/each}}
+  &lt;/ul&gt;
+
+  &lt;/div&gt;
+{{/if}}
+</code></pre>
+</div>
+
+<h3 id="partials">Partials</h3>
+
+<p>We provide a common HTML email header and footer for use in comms of type <code class="highlighter-rouge">Service</code>.</p>
+
+<p>You can include these in your Handlebars templates using the standard Handlebars partial syntax: <code class="highlighter-rouge"><span class="p">{</span><span class="err">{&gt;</span><span class="w"> </span><span class="err">header</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code> and <code class="highlighter-rouge"><span class="p">{</span><span class="err">{&gt;</span><span class="w"> </span><span class="err">footer</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>.</p>
+
+<h2 id="publishing-a-template">Publishing a template</h2>
+
+<p>We are working on fancy tooling to manage and publish templates, but for now you’ll need to work with the comms team and ask them to manually upload your templates to S3.</p>
+
+</section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/comms-platform/highlight/highlight.pack.js"></script><script>hljs.configure({
+languages:['scala','java','bash']
+});
+hljs.initHighlighting();
+             </script><script src="/comms-platform/js/main.js"></script></body></html>
