@@ -3,6 +3,8 @@ dependencies:
     - "~/.sbt"
     - "target/resolution-cache"
     - "project/target/resolution-cache"
+  post:
+    - gem install jekyll
 
 test:
   override:
