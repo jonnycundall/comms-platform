@@ -1,0 +1,16 @@
+dependencies:
+  cache_directories:
+    - "~/.sbt"
+    - "target/resolution-cache"
+    - "project/target/resolution-cache"
+
+test:
+  override:
+    - sbt makeMicrosite
+
+deployment:
+  publish_site:
+    branch: master
+    owner: ovotech
+    commands:
+      - sbt publishMicrosite
