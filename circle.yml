@@ -1,0 +1,18 @@
+dependencies:
+  cache_directories:
+    - "~/.sbt"
+    - "target/resolution-cache"
+    - "project/target/resolution-cache"
+  post:
+    - gem install jekyll
+
+test:
+  override:
+    - sbt makeMicrosite
+
+deployment:
+  publish_site:
+    branch: master
+    owner: ovotech
+    commands:
+      - sbt publishMicrosite
