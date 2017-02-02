@@ -1,0 +1,32 @@
+#site-header, #site-footer {
+  background-image: linear-gradient(135deg,#79ba10 0,#24911d 100%);
+  background-image: url("../img/jumbotron_pattern.png");
+  background-color: #24911d;
+  background-size: cover;
+}
+
+#site-header .jumbotron {
+  background-image: none;
+}
+
+#site-header .horizontalNav {
+  border: 1px solid #0a9928;
+}
+
+#site-footer p {
+  color: rgba(255, 255, 255, .6);
+}
+
+#site-footer p a {
+  color: rgba(255, 255, 255, .9);
+  text-decoration-skip: ink;
+  -webkit-text-decoration-skip: ink;
+}
+
+.technologies {
+  display: none;
+}
+
+.jumbotron {
+  background-color: unset;
+}
