@@ -15,4 +15,7 @@ deployment:
     branch: master
     owner: ovotech
     commands:
+      - git config --global user.email "hello.comms@ovoenergy.com"
+      - git config --global user.name "OVO Comms CircleCI"
+      - git config --global push.default simple
       - sbt publishMicrosite
