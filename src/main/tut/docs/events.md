@@ -101,6 +101,24 @@ val metadata = Metadata(
 val event = TriggeredV2(metadata, templateData)
 ```
 
+#### A note about IntelliJ support
+
+Because our annotation uses a scala.meta macro to generate code at compile time, IntelliJ gets quite confused.
+
+Autocomplete will not work, and your code will look like it doesn't compile:
+
+![IntelliJ is a sea of red](../img/intellij-sea-of-red.png)
+
+Rest assured that your code will compile just fine with sbt.
+
+If you are using a recent version of IntelliJ, there will be a little icon next to the annotation:
+
+![IntelliJ: expand scala.meta macro](../img/intellij-expand-macro.png)
+
+Clicking this will expand the annotation, replacing the annotated object with the generated code. This means you can see exactly what the generated code looks like, and will also allow IntelliJ to understand it.
+
+However, we recommend that you un-expand the macro again afterwards (currently the only way to do this in IntelliJ is to "Undo"), and avoid committing the generated code to git.
+
 ### Sending the event
 
 All events must be encoded as Avro JSON. The Avro schemas are available [here](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
