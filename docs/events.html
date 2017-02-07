@@ -96,6 +96,24 @@
 </code></pre>
 </div>
 
+<h4 id="a-note-about-intellij-support">A note about IntelliJ support</h4>
+
+<p>Because our annotation uses a scala.meta macro to generate code at compile time, IntelliJ gets quite confused.</p>
+
+<p>Autocomplete will not work, and your code will look like it doesn’t compile:</p>
+
+<p><img src="../img/intellij-sea-of-red.png" alt="IntelliJ is a sea of red" /></p>
+
+<p>Rest assured that your code will compile just fine with sbt.</p>
+
+<p>If you are using a recent version of IntelliJ, there will be a little icon next to the annotation:</p>
+
+<p><img src="../img/intellij-expand-macro.png" alt="IntelliJ: expand scala.meta macro" /></p>
+
+<p>Clicking this will expand the annotation, replacing the annotated object with the generated code. This means you can see exactly what the generated code looks like, and will also allow IntelliJ to understand it.</p>
+
+<p>However, we recommend that you un-expand the macro again afterwards (currently the only way to do this in IntelliJ is to “Undo”), and avoid committing the generated code to git.</p>
+
 <h3 id="sending-the-event">Sending the event</h3>
 
 <p>All events must be encoded as Avro JSON. The Avro schemas are available <a href="https://github.com/ovotech/comms-kafka-messages/tree/master/schemas">here</a>.</p>
