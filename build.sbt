@@ -21,6 +21,7 @@ micrositePalette := Map(
 scalaVersion := "2.11.8"
 resolvers += Resolver.bintrayRepo("ovotech", "maven")
 libraryDependencies ++= Seq(
+  "com.ovoenergy" %% "comms-kafka-messages" % "1.4",
   "com.ovoenergy" %% "comms-triggered-event-builder" % "1.0",
   "com.ovoenergy" %% "comms-kafka-serialisation" % "2.0"
 )
