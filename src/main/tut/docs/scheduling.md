@@ -94,9 +94,9 @@ val cancellationRequested = CancellationRequested(
 
 # How can I get feedback on my scheduled comms?
 
-*Firstly you can see if a comm has been scheduled and what time for in our Audit log. Within the comm details breakdown page we now have a "Scheduled for" field ([PRD](https://audit-log.ovo-comms.co.uk), [UAT](https://audit-log-uat.ovo-comms.co.uk))
+* Firstly you can see if a comm has been scheduled and what time for in our Audit log. Within the comm details breakdown page we now have a "Scheduled for" field ([PRD](https://audit-log.ovo-comms.co.uk), [UAT](https://audit-log-uat.ovo-comms.co.uk))
   
-*Additionally there are a number of events the comms platform produces which provide feedback on scheduled comms:
+* Additionally there are a number of events the comms platform produces which provide feedback on scheduled comms:
 
 ### Orchestration Started
 
@@ -113,6 +113,5 @@ Generated to confirm the successful cancellation of a scheduled comm. Please not
 Generated if a Cancellation Request fails and we were unable to cancel the requested comm(s). Just as with Cancelled, there may be multiple comms which failed to cancel so there could be multiple failed Cancellation events as a result of a CancellationRequested event
 
 [Avro Schema](https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/FailedCancellation.avsc) | [Scala Case Class](https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedCancellation.scala) | Kafka topic: comms.failed.cancellation |
- 
  
  
