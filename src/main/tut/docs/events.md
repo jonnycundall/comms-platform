@@ -98,7 +98,7 @@ val metadata = Metadata(
 	sourceMetadata = None
 )
 
-val event = TriggeredV2(metadata, templateData)
+val event = TriggeredV2(metadata, templateData, None, None)
 ```
 
 #### A note about IntelliJ support

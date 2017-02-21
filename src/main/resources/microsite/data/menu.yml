@@ -7,3 +7,6 @@ options:
 
   - title: Events
     url: docs/events.html
+
+  - title: Scheduling
+    url: docs/scheduling.html
