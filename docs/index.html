@@ -12,7 +12,7 @@
 <p>When we receive your Kafka event, we do roughly the following:</p>
 
 <ol>
-  <li><strong>Orchestration.</strong> This includes looking up the customer’s profile, scheduling the comm to be delivered later (note: this feature is coming soon), and choosing the most suitable channel on which to deliver the comm (email, SMS, …).</li>
+  <li><strong>Orchestration.</strong> This includes looking up the customer’s profile, scheduling the comm to be delivered later (and cancelling these scheduled comms at a later date if you decide!), and choosing the most suitable channel on which to deliver the comm (email, SMS, …).</li>
   <li><strong>Composition.</strong> We combine your comm template with the customer-specific data you provide in your Kafka event to generate the content of your comm.</li>
   <li><strong>Delivery.</strong> We send the comm to the API of the appropriate delivery gateway.</li>
   <li><strong>Tracking.</strong> We listen to events from the delivery gateway in order to track the comm’s delivery progress.</li>
