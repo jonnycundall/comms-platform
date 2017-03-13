@@ -5,11 +5,11 @@ title: "Scheduling"
 
 # Scheduling
 
-Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV2 event (see the [events](docs/events.html) page for more info on triggered events).  
+Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV2 event (see the [events](events.html) page for more info on triggered events).  
  
 # How do I schedule a comm?
 
-When generating a TriggeredV2 event ([as explained in the events page](docs/events.html)), simply include the date and time you want the comm to be delivered in the ISO-8601 format.
+When generating a TriggeredV2 event ([as explained in the events page](events.html)), simply include the date and time you want the comm to be delivered in the ISO-8601 format.
  
 ```tut:silent
 import com.ovoenergy.comms.model.{TriggeredV2, Metadata, TemplateData}
@@ -53,7 +53,7 @@ val triggered = TriggeredV2(
 )
 ```
 
-Then send the TriggeredV2 event as described in the [events page](docs/events.html) ([avro schema](), [scala case class]()) to `comms.triggered.v2` 
+Then send the TriggeredV2 event as described in the [events page](events.html) to `comms.triggered.v2` 
 
 # Why should I specify when my comm expires?
 
