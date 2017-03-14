@@ -12,7 +12,7 @@ cd target/site
 jekyll serve
 ```
 
-The site should now be running at [http://localhost:9000/comms-platform/](http://localhost:9000/comms-platform/).
+The site should now be running at [http://localhost:4000/comms-platform/](http://localhost:4000/comms-platform/).
 
 ## To publish the site
 

@@ -7,8 +7,8 @@ title: "Getting Started"
 
 In order to start sending comms to customers, you will need two things:
 
-1. A template. See the [templates](docs/templates.html) page for information on how to write and publish templates.
-2. Some code to send an event to a Kafka topic in order to trigger delivery of your comm to a customer. See the [events](docs/events.html) page for information about what the event contains and how to build and send one.
+1. A template. See the [templates](templates.html) page for information on how to write and publish templates.
+2. Some code to send an event to a Kafka topic in order to trigger delivery of your comm to a customer. See the [events](events.html) page for information about what the event contains and how to build and send one.
 
 ## How the comms platform works
 
