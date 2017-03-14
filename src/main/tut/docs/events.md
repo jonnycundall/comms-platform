@@ -111,13 +111,7 @@ Autocomplete will not work, and your code will look like it doesn't compile:
 
 Rest assured that your code will compile just fine with sbt.
 
-If you are using a recent version of IntelliJ, there will be a little icon next to the annotation:
-
-![IntelliJ: expand scala.meta macro](../img/intellij-expand-macro.png)
-
-Clicking this will expand the annotation, replacing the annotated object with the generated code. This means you can see exactly what the generated code looks like, and will also allow IntelliJ to understand it.
-
-However, we recommend that you un-expand the macro again afterwards (currently the only way to do this in IntelliJ is to "Undo"), and avoid committing the generated code to git.
+Note that the macro will print a simplified version of the generated code when you compile, so you can see the structure of the generated model classes that way.
 
 ### Sending the event
 
