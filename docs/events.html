@@ -96,6 +96,25 @@
 </code></pre>
 </div>
 
+<h4 id="viewing-the-generated-code">Viewing the generated code</h4>
+
+<p>The macro will print a slightly simplified version of the generated code to standard out when you compile, so you can see the structure of the generated model classes.</p>
+
+<p>The output should look something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Based on your comm template, the following code has been generated:
+
+object CanaryTemplateData {
+  val commManifest: CommManifest = CommManifest(CommType.Service, "canary", "2.0")
+  case class Thing(word: String) { ... }
+}
+case class CanaryTemplateData(traceToken: String, optionalString: Option[String], things: Seq[CanaryTemplateData.Thing]) { ... }
+
+Use these classes to construct an instance of CanaryTemplateData, then call its `convertToTemplateData`
+to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` event.
+</code></pre>
+</div>
+
 <h4 id="a-note-about-intellij-support">A note about IntelliJ support</h4>
 
 <p>Because our annotation uses a scala.meta macro to generate code at compile time, IntelliJ gets quite confused.</p>
@@ -106,7 +125,13 @@
 
 <p>Rest assured that your code will compile just fine with sbt.</p>
 
-<p>Note that the macro will print a simplified version of the generated code when you compile, so you can see the structure of the generated model classes that way.</p>
+<p>If you are using a IntelliJ 2017.1 (currently available as an EAP, due to be officially released in spring 2017), there will be a little icon next to the annotation:</p>
+
+<p><img src="../img/intellij-expand-macro.png" alt="IntelliJ: expand scala.meta macro" /></p>
+
+<p>Clicking this will expand the annotation, replacing the annotated object with the generated code. This means you can see exactly what the generated code looks like, and will also allow IntelliJ to understand it.</p>
+
+<p>However, we recommend that you un-expand the macro again afterwards (currently the only way to do this in IntelliJ is to “Undo”), and avoid committing the generated code to git.</p>
 
 <h3 id="sending-the-event">Sending the event</h3>
 
