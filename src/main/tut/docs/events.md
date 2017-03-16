@@ -101,6 +101,25 @@ val metadata = Metadata(
 val event = TriggeredV2(metadata, templateData, None, None)
 ```
 
+#### Viewing the generated code
+
+The macro will print a slightly simplified version of the generated code to standard out when you compile, so you can see the structure of the generated model classes.
+
+The output should look something like this:
+
+```
+Based on your comm template, the following code has been generated:
+
+object CanaryTemplateData {
+  val commManifest: CommManifest = CommManifest(CommType.Service, "canary", "2.0")
+  case class Thing(word: String) { ... }
+}
+case class CanaryTemplateData(traceToken: String, optionalString: Option[String], things: Seq[CanaryTemplateData.Thing]) { ... }
+
+Use these classes to construct an instance of CanaryTemplateData, then call its `convertToTemplateData`
+to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` event.
+```
+
 #### A note about IntelliJ support
 
 Because our annotation uses a scala.meta macro to generate code at compile time, IntelliJ gets quite confused.
@@ -111,7 +130,13 @@ Autocomplete will not work, and your code will look like it doesn't compile:
 
 Rest assured that your code will compile just fine with sbt.
 
-Note that the macro will print a simplified version of the generated code when you compile, so you can see the structure of the generated model classes that way.
+If you are using a IntelliJ 2017.1 (currently available as an EAP, due to be officially released in spring 2017), there will be a little icon next to the annotation:
+
+![IntelliJ: expand scala.meta macro](../img/intellij-expand-macro.png)
+
+Clicking this will expand the annotation, replacing the annotated object with the generated code. This means you can see exactly what the generated code looks like, and will also allow IntelliJ to understand it.
+
+However, we recommend that you un-expand the macro again afterwards (currently the only way to do this in IntelliJ is to "Undo"), and avoid committing the generated code to git.
 
 ### Sending the event
 
