@@ -98,7 +98,7 @@ val metadata = Metadata(
 	sourceMetadata = None
 )
 
-val event = TriggeredV2(metadata, templateData, None, None)
+val event = TriggeredV2(metadata, templateData, None, None, None)
 ```
 
 #### Viewing the generated code

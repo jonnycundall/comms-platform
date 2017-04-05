@@ -49,7 +49,8 @@ val triggered = TriggeredV2(
   metadata = metadata,
   templateData = templateData, 
   deliverAt = Some(java.time.OffsetDateTime.now().plusSeconds(180).toString),
-  expireAt = None
+  expireAt = None,
+  preferredChannels = None
 )
 ```
 
@@ -66,7 +67,8 @@ val triggered = TriggeredV2(
   metadata = metadata,
   templateData = templateData, 
   deliverAt = Some(java.time.OffsetDateTime.now().plusSeconds(180).toString),
-  expireAt = Some(java.time.OffsetDateTime.now().plusSeconds(360).toString)
+  expireAt = Some(java.time.OffsetDateTime.now().plusSeconds(360).toString),
+  preferredChannels = None
 )
 ```
 
