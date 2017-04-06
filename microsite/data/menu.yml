@@ -10,3 +10,6 @@ options:
 
   - title: Scheduling
     url: docs/scheduling.html
+
+  - title: Channels
+    url: docs/channels.html
