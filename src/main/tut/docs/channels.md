@@ -20,6 +20,8 @@ Each time a comm is [triggered](events.html) the channel the comm is sent over i
 
 When a comm [template](templates.html) is published, the channels the comm is available over are specified. 
 
+A template obviously must have at least one channel, which can be either SMS or email. 
+
 ## Customer Communication Preferences
 
 Within My OVO customers set which channels they wish to receive comms over, they are able to do this for Service and Marketing comms separately.

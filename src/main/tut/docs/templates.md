@@ -3,6 +3,10 @@ layout: docs
 title: "Templates"
 ---
 
+<div class="alert alert-info">
+This documentation has been updated in preperation for release of SMS support, this is expected to be available from 12/4/17.
+</div>
+
 # Templates
 
 In order to send comms, you will need a template.
@@ -21,6 +25,8 @@ A comm template is a directory on S3 that adheres to the following structure.
         body.txt (optional)
         sender.txt (optional)
         assets/ (optional)
+      sms/
+        body.txt
 ```
 
 Let's go through some of that terminology.
@@ -41,7 +47,7 @@ Templates are versioned, and every published version of a comm is immutable. So 
 
 ### Channels
 
-Currently email is our only supported channel, so you must provide an email template. In future, when we add support for SMS and other channels, you will be able to include different templates for each channel that you want to use.
+Currently email and SMS channels are supported and you must provide either or both, an email and SMS template. 
 
 #### Email
 
@@ -62,6 +68,16 @@ For example if you add the following asset `email/assets/images/image1.png` then
 * `<img src="assets/images/image1.png" width="70" height="70" alt="My image" style="display:block; border:none; font-family:Arial, Helvetica, sans-serif; font-size:10px" border="0" />`
 
 When your template is published the assets are placed in a public S3 repo and the links in the template are rewritten accordingly.
+
+#### SMS
+
+An SMS template consists of a single template file:
+
+* `body.txt` is a Handlebars template for the text of the message
+
+The sender of the SMS is currently set by the platform. 
+
+More on channels [here](channels.html).
 
 ## Handlebars syntax
 
@@ -138,7 +154,7 @@ Here's another hypothetical example that includes conditionals and loops:
 
 ### Partials
 
-We provide a common HTML email header and footer for use in comms of type `Service`.
+For emails we provide a common HTML email header and footer for use in comms of type `Service`.
 
 {% raw %}
 You can include these in your Handlebars templates using the standard Handlebars partial syntax: `{{> header }}` and `{{> footer }}`.
@@ -152,13 +168,28 @@ The app for publishing and viewing templates is [here](https://templates.ovo-com
 
 Whether you are publishing a new version of an existing template or a completely new template, via the app, you will be required to upload your template as a zip file.
 
-The structure of the zip file should be something like:
+Some example file structures for the zip file could be:
+
+#### Email only
+
  * `/email/subject.txt`
  * `/email/body.html`
  * `/email/body.txt`
  * `/email/sender.txt`
  * `/email/assets/images/someImage.png`
  * `/email/assets/icon/someIcon.png`
+
+#### SMS only
+ 
+ * `/sms/body.txt`
+ 
+#### Email and SMS
+
+Could be as simple as:
+ 
+ * `/email/subject.txt`
+ * `/email/body.html`
+ * `/sms/body.txt`
  
 ## Environments 
 
