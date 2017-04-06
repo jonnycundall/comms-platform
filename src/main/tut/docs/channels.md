@@ -31,7 +31,7 @@ For Service comms the customer is forced to choose either Post or Email, with SM
 Unless specified by the customer in their communication preferences, comms will not be issued via said channel.
 
 <div class="alert alert-info">
-If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Comminication Preferences are not taked into account.
+If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Comminication Preferences are not taken into account.
 </div>
 
   
