@@ -34,6 +34,8 @@ Unless specified by the customer in their communication preferences, comms will 
 If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Comminication Preferences are not taken into account.
 </div>
 
+While the platform is only supporting notification comms, and only supporting email and SMS channels, if a customer has set their Service Communication Preferences to post rather than email, then post is removed from their list of Service Communication Preferences used by the platform. 
+
   
 ## Customer Profile
   
