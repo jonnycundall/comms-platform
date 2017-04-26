@@ -3,10 +3,6 @@ layout: docs
 title: "Templates"
 ---
 
-<div class="alert alert-info">
-This documentation has been updated in preperation for release of SMS support, this is expected to be available from 12/4/17.
-</div>
-
 # Templates
 
 In order to send comms, you will need a template.
