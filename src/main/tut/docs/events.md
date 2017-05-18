@@ -7,14 +7,15 @@ title: "Events"
 
 ## TriggeredV2
 
-In order to send a comm to a customer, you need to trigger the comm by sending a `TriggeredV2` event to the `comms.triggered.v2` Kafka topic.
+In order to send a comm to a customer, you need to trigger the comm by sending a `TriggeredV3` event to the `comms.triggered.v3` Kafka topic.
 
 ### Event structure
 
-The `TriggeredV2` event has the following fields: 
+The `TriggeredV3` event has the following fields: 
 
-* `metadata` - this includes a unique ID for the comm, the ID of the customer you want to send it to, etc. The fields are documented in the [Avro schema](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
+* `metadataV2` - this includes a unique ID for the comm and a DeliverTo (either the id of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the [Avro schema](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
 * `templateData` - this is the customer-specific data you want to use to fill in the placeholders in your comm template. **Note:** If you fail to fill in all the placeholders in the template, your comm will not be sent!
+* `deliverTo` - this 
 
 ### Building the event
 
@@ -72,7 +73,7 @@ val data = MeterReadsComm(
 )
 ```
 
-You can then convert it into the appropriate format for inclusion in a `TriggeredV2` event:
+You can then convert it into the appropriate format for inclusion in a `TriggeredV3` event:
 
 ```tut:silent
 import com.ovoenergy.comms.model.TemplateData
@@ -83,13 +84,12 @@ val templateData: Map[String, TemplateData] = data.convertToTemplateData
 Now you're ready to build an event:
 
 ```tut:silent
-import com.ovoenergy.comms.model.{Metadata, TriggeredV2}
-
-val metadata = Metadata(
-	createdAt = java.time.OffsetDateTime.now().toString,
+import com.ovoenergy.comms.model.{MetadataV2, TriggeredV3, Customer}
+val metadata = MetadataV2(
+	createdAt = java.time.Instant.now(),
 	eventId = java.util.UUID.randomUUID().toString,
-	customerId = "my-customer",
 	traceToken = java.util.UUID.randomUUID().toString,
+	deliverTo = Customer("my-customer"), 
 	commManifest = MeterReadsComm.commManifest, // use the generated comm manifest in the companion object
 	friendlyDescription = "awesome comm",
 	source = "my amazing service",
@@ -98,7 +98,7 @@ val metadata = Metadata(
 	sourceMetadata = None
 )
 
-val event = TriggeredV2(metadata, templateData, None, None, None)
+val event = TriggeredV3(metadata, templateData, None, None, None)
 ```
 
 #### Viewing the generated code
@@ -117,7 +117,7 @@ object CanaryTemplateData {
 case class CanaryTemplateData(traceToken: String, optionalString: Option[String], things: Seq[CanaryTemplateData.Thing]) { ... }
 
 Use these classes to construct an instance of CanaryTemplateData, then call its `convertToTemplateData`
-to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` event.
+to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` event.
 ```
 
 #### A note about IntelliJ support
