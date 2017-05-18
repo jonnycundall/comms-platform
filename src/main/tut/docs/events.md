@@ -5,7 +5,7 @@ title: "Events"
 
 # Events
 
-## TriggeredV2
+## TriggeredV3
 
 In order to send a comm to a customer, you need to trigger the comm by sending a `TriggeredV3` event to the `comms.triggered.v3` Kafka topic.
 
@@ -13,13 +13,22 @@ In order to send a comm to a customer, you need to trigger the comm by sending a
 
 The `TriggeredV3` event has the following fields: 
 
-* `metadataV2` - this includes a unique ID for the comm and a DeliverTo (either the id of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the [Avro schema](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
-* `templateData` - this is the customer-specific data you want to use to fill in the placeholders in your comm template. **Note:** If you fail to fill in all the placeholders in the template, your comm will not be sent!
-* `deliverTo` - this 
+* `metadata` - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the [Avro schema](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
+* `templateData` - This is the customer-specific data you want to use to fill in the placeholders in your comm template. **Note:** If you fail to fill in all the placeholders in the template, your comm will not be sent!
+* `deliverAt` (optional) - If you want to schedule the comm to be sent in the future, use this field to specify the delivery time. See the [scheduling](scheduling.html) page for more details.
+* `expireAt` (optional) - If your comm is time sensitive, you can use this field to specify the latest delivery time. See the [scheduling](scheduling.html) page for more details.
+* `preferredChannels` (optional) - An ordered list of channels over which you would like to send the comm. See the [channels](channels.html) page for more details.
+
+### DeliverTo - customer vs non-customer comms
+
+As part of the metadata, you need to specify the `deliverTo` field. You can provide one of two things:
+
+* A `Customer`, containing a customer ID, if you want to send the comm to an OVO customer.
+* A `ContactDetails`, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.
 
 ### Building the event
 
-As long as you send us a valid `TriggeredV2` event, you can build it however you like.
+As long as you send us a valid `TriggeredV3` event, you can build it however you like.
 
 However, if you are using Scala, we recommend you use our `comms-triggered-event-builder` library. This will generate Scala classes corresponding to the structure of your comm template, giving you a compile-time guarantee that you have filled in the template correctly.
 
@@ -98,7 +107,13 @@ val metadata = MetadataV2(
 	sourceMetadata = None
 )
 
-val event = TriggeredV3(metadata, templateData, None, None, None)
+val event = TriggeredV3(
+  metadata = metadata, 
+  templateData = templateData, 
+  deliverAt = None, 
+  expireAt = None, 
+  preferredChannels = None
+)
 ```
 
 #### Viewing the generated code
@@ -130,7 +145,7 @@ Autocomplete will not work, and your code will look like it doesn't compile:
 
 Rest assured that your code will compile just fine with sbt.
 
-If you are using a IntelliJ 2017.1 (currently available as an EAP, due to be officially released in spring 2017), there will be a little icon next to the annotation:
+If you are using IntelliJ 2017.1 or newer, there will be a little icon next to the annotation:
 
 ![IntelliJ: expand scala.meta macro](../img/intellij-expand-macro.png)
 
@@ -146,12 +161,13 @@ If you are using Scala, we recommend that you use our `comms-kafka-serialisation
 
 ```tut:silent
 import com.ovoenergy.comms.serialisation.Serialisation.avroSerializer
+import com.ovoenergy.comms.serialisation.Codecs._
 
-val serializer = avroSerializer[TriggeredV2]
+val serializer = avroSerializer[TriggeredV3]
 
-val json: Array[Byte] = serializer.serialize("comms.triggered.v2", event)
+val json: Array[Byte] = serializer.serialize("comms.triggered.v3", event)
 ```
 
 ## Example project
 
-We have a full working example project showing the recommended way to build and send a `TriggeredV2` event in Scala: [https://github.com/ovotech/comms-example-trigger](https://github.com/ovotech/comms-example-trigger)
+We have a full working example project showing the recommended way to build and send a `TriggeredV3` event in Scala: [https://github.com/ovotech/comms-example-trigger](https://github.com/ovotech/comms-example-trigger)

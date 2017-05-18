@@ -43,7 +43,7 @@ Templates are versioned, and every published version of a comm is immutable. So 
 
 ### Channels
 
-Currently email and SMS channels are supported and you must provide either or both, an email and SMS template. 
+Currently email and SMS channels are supported and you must provide either an email template, an SMS template or both. 
 
 #### Email
 
@@ -87,14 +87,21 @@ As well as plain old Mustache-style placeholders (`{{foo}}`), you can also write
 
 The following fields are provided automatically for you to refer to in your templates:
 
-* `profile.firstName`
-* `profile.lastName`
+* `profile.firstName` (only for customer comms)
+* `profile.lastName` (only for customer comms)
 * `recipient.emailAddress` (only available in email templates, not in other channels)
+* `recipient.phoneNumber` (only available in SMS templates, not in other channels)
 * `system.year`
 * `system.month`
 * `system.dayOfMonth`
 
 We can add more of these fields if necessary. If you would like a new field added, please get in touch.
+
+#### Customer and non-customer comms
+
+If you specify an OVO customer ID for the `deliverTo` field when you trigger your comm, we look up the customer's profile and provide it for use in your template as the `profile.*` fields.
+
+When you send a non-customer comm, by specifying contact details instead of a customer ID, we do not provide any `profile.*` fields.
 
 ### Simple example template
 
@@ -110,7 +117,7 @@ Here's a hypothetical HTML email body template:
 ```
 {% endraw %}
 
-In this case, `profile.firstName` and `profile.lastName` are provided automatically, so you would need to provide the values of `result` and `thing` in your Kafka event when you trigger a comm. See the [Events](events.html) page for more details of how this is done.
+In this case, `profile.firstName` and `profile.lastName` are provided automatically (assuming this is a customer comm), so you would need to provide the values of `result` and `thing` in your Kafka event when you trigger a comm. See the [Events](events.html) page for more details of how this is done.
 
 ### More complex example
 

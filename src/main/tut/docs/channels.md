@@ -32,13 +32,11 @@ If a customer has no Service Communication Preferences this indicates that they 
 
 While the platform is only supporting notification comms, and only supporting email and SMS channels, if a customer has set their Service Communication Preferences to post rather than email, then post is removed from their list of Service Communication Preferences used by the platform. 
 
-  
 ## Customer Profile
-  
+
 The customer-service provides us with contact details for a customer. 
 
 In order to send an email or SMS, an email address or mobile number are required respectively, if these are not present then the comm can not be issued over that channel.
-
 
 ## Preferred Channels
 
@@ -51,7 +49,7 @@ This is a list of preferred channels and the comm may be issued over a channel n
 The following example is triggering a MeterReads comm, specifying that we would like to send the comm over SMS if possible, followed by email and then any other channel.
 
 ```tut:silent
-import com.ovoenergy.comms.model.{Metadata, TriggeredV2, Channel, TemplateData}
+import com.ovoenergy.comms.model._
 import com.ovoenergy.comms.triggered.Template
                                                                  
 @Template("service", "example-for-docs", "0.1")
@@ -68,10 +66,10 @@ val data = MeterReadsComm(
   ))
 )
 
-val metadata = Metadata(
-	createdAt = java.time.OffsetDateTime.now().toString,
+val metadata = MetadataV2(
+	createdAt = java.time.Instant.now(),
 	eventId = java.util.UUID.randomUUID().toString,
-	customerId = "my-customer",
+	deliverTo = Customer("my-customer"),
 	traceToken = java.util.UUID.randomUUID().toString,
 	commManifest = MeterReadsComm.commManifest, // use the generated comm manifest in the companion object
 	friendlyDescription = "awesome comm",
@@ -81,10 +79,16 @@ val metadata = Metadata(
 	sourceMetadata = None
 )
 
-val preferredChannels = Some(List(Channel.SMS, Channel.Email))
+val preferredChannels = Some(List(SMS, Email))
 val templateData: Map[String, TemplateData] = data.convertToTemplateData
 
-val event = TriggeredV2(metadata, templateData, None, None, preferredChannels)
+val event = TriggeredV3(
+  metadata = metadata, 
+  templateData = templateData, 
+  deliverAt = None, 
+  expireAt = None, 
+  preferredChannels = preferredChannels
+)
 ```
 
 ## Cost
