@@ -5,14 +5,14 @@ title: "Home"
 
 # Comms Platform
 
-A platform for sending communications to OVO customers.
+A platform for sending and tracking communications to OVO customers and other users.
 
 ## How to send a comm
 
 So you want to send a comm using our platform? Excellent. There are two steps to the process:
 
 1. [Create and publish a comm template](docs/templates.html)
-2. [Send a Kafka event](docs/events.html) to trigger a comm. This event contains a reference to the template, plus the customer-specific data you want to inject into it.
+2. [Send a Kafka event](docs/events.html) to trigger a comm. This event contains a reference to the template, plus the user-specific data you want to inject into it.
 
 We'll take care of the rest.
 
