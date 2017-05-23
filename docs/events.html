@@ -1,21 +1,33 @@
 <html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>OVO Comms Platform</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="comms-platform" /><meta name="author" content="Comms team" /><meta name="og:image" content="/comms-platform/img/poster.png" /><meta name="og:title" content="OVO Comms Platform" /><meta name="og:site_name" content="OVO Comms Platform" /><meta name="og:url" content="https://ovoenergy.slack.com/messages/hello_comms/" /><meta name="og:type" content="website" /><meta name="og:description" content="comms-platform" /><meta name="twitter:image" content="/comms-platform/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/comms-platform/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/comms-platform/highlight/styles/default.css" /><link rel="stylesheet" href="/comms-platform/css/style.css" /><link rel="stylesheet" href="/comms-platform/css/palette.css" /><link rel="stylesheet" href="/comms-platform/css/docs.css" /><link rel="stylesheet" href="/comms-platform/css/home.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><ul id="sidebar" class="sidebar-nav"><li class="sidebar-brand"><a href="/comms-platform/" class="brand"><div class="brand-wrapper" style="background:url('/comms-platform/img/sidebar_brand.png') no-repeat"><span>OVO Comms Platform</span></div></a></li> <li><a href="/comms-platform/docs/index.html" class="">Getting Started</a></li> <li><a href="/comms-platform/docs/templates.html" class="">Templates</a></li> <li><a href="/comms-platform/docs/events.html" class=" active ">Events</a></li> <li><a href="/comms-platform/docs/scheduling.html" class="">Scheduling</a></li> <li><a href="/comms-platform/docs/channels.html" class="">Channels</a></li></ul></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-eye"></i><span>WATCH<span id="eyes" class="label label-default">--</span></span></a></li><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-star-o"></i><span>STARS<span id="stars" class="label label-default">--</span></span></a></li><li><a href="#" onclick="shareSiteTwitter('OVO Comms Platform comms-platform');"><i class="fa fa-twitter"></i></a></li><li><a href="#" onclick="shareSiteFacebook('OVO Comms Platform comms-platform');"><i class="fa fa-facebook"></i></a></li><li><a href="#" onclick="shareSiteGoogle();"><i class="fa fa-google-plus"></i></a></li></ul></div></div></div></div><div id="content" data-github-owner="ovotech" data-github-repo="comms-platform"><div class="content-wrapper"><section><h1 id="events">Events</h1>
 
-<h2 id="triggeredv2">TriggeredV2</h2>
+<h2 id="triggeredv3">TriggeredV3</h2>
 
-<p>In order to send a comm to a customer, you need to trigger the comm by sending a <code class="highlighter-rouge">TriggeredV2</code> event to the <code class="highlighter-rouge">comms.triggered.v2</code> Kafka topic.</p>
+<p>In order to send a comm to a customer, you need to trigger the comm by sending a <code class="highlighter-rouge">TriggeredV3</code> event to the <code class="highlighter-rouge">comms.triggered.v3</code> Kafka topic.</p>
 
 <h3 id="event-structure">Event structure</h3>
 
-<p>The <code class="highlighter-rouge">TriggeredV2</code> event has the following fields:</p>
+<p>The <code class="highlighter-rouge">TriggeredV3</code> event has the following fields:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">metadata</code> - this includes a unique ID for the comm, the ID of the customer you want to send it to, etc. The fields are documented in the <a href="https://github.com/ovotech/comms-kafka-messages/tree/master/schemas">Avro schema</a>.</li>
-  <li><code class="highlighter-rouge">templateData</code> - this is the customer-specific data you want to use to fill in the placeholders in your comm template. <strong>Note:</strong> If you fail to fill in all the placeholders in the template, your comm will not be sent!</li>
+  <li><code class="highlighter-rouge">metadata</code> - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the <a href="https://github.com/ovotech/comms-kafka-messages/tree/master/schemas">Avro schema</a>.</li>
+  <li><code class="highlighter-rouge">templateData</code> - This is the customer-specific data you want to use to fill in the placeholders in your comm template. <strong>Note:</strong> If you fail to fill in all the placeholders in the template, your comm will not be sent!</li>
+  <li><code class="highlighter-rouge">deliverAt</code> (optional) - If you want to schedule the comm to be sent in the future, use this field to specify the delivery time. See the <a href="scheduling.html">scheduling</a> page for more details.</li>
+  <li><code class="highlighter-rouge">expireAt</code> (optional) - If your comm is time sensitive, you can use this field to specify the latest delivery time. See the <a href="scheduling.html">scheduling</a> page for more details.</li>
+  <li><code class="highlighter-rouge">preferredChannels</code> (optional) - An ordered list of channels over which you would like to send the comm. See the <a href="channels.html">channels</a> page for more details.</li>
+</ul>
+
+<h3 id="deliverto---customer-vs-non-customer-comms">DeliverTo - customer vs non-customer comms</h3>
+
+<p>As part of the metadata, you need to specify the <code class="highlighter-rouge">deliverTo</code> field. You can provide one of two things:</p>
+
+<ul>
+  <li>A <code class="highlighter-rouge">Customer</code>, containing a customer ID, if you want to send the comm to an OVO customer.</li>
+  <li>A <code class="highlighter-rouge">ContactDetails</code>, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.</li>
 </ul>
 
 <h3 id="building-the-event">Building the event</h3>
 
-<p>As long as you send us a valid <code class="highlighter-rouge">TriggeredV2</code> event, you can build it however you like.</p>
+<p>As long as you send us a valid <code class="highlighter-rouge">TriggeredV3</code> event, you can build it however you like.</p>
 
 <p>However, if you are using Scala, we recommend you use our <code class="highlighter-rouge">comms-triggered-event-builder</code> library. This will generate Scala classes corresponding to the structure of your comm template, giving you a compile-time guarantee that you have filled in the template correctly.</p>
 
@@ -67,7 +79,7 @@
 </code></pre>
 </div>
 
-<p>You can then convert it into the appropriate format for inclusion in a <code class="highlighter-rouge">TriggeredV2</code> event:</p>
+<p>You can then convert it into the appropriate format for inclusion in a <code class="highlighter-rouge">TriggeredV3</code> event:</p>
 
 <div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.TemplateData</span>
 
@@ -77,13 +89,12 @@
 
 <p>Now you’re ready to build an event:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">Metadata</span><span class="o">,</span> <span class="nc">TriggeredV2</span><span class="o">}</span>
-
-<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">Metadata</span><span class="o">(</span>
-	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">MetadataV2</span><span class="o">,</span> <span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">Customer</span><span class="o">}</span>
+<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">MetadataV2</span><span class="o">(</span>
+	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
 	<span class="n">eventId</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
-	<span class="n">customerId</span> <span class="k">=</span> <span class="s">"my-customer"</span><span class="o">,</span>
 	<span class="n">traceToken</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
+	<span class="n">deliverTo</span> <span class="k">=</span> <span class="nc">Customer</span><span class="o">(</span><span class="s">"my-customer"</span><span class="o">),</span> 
 	<span class="n">commManifest</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">.</span><span class="n">commManifest</span><span class="o">,</span> <span class="c1">// use the generated comm manifest in the companion object
 </span>	<span class="n">friendlyDescription</span> <span class="k">=</span> <span class="s">"awesome comm"</span><span class="o">,</span>
 	<span class="n">source</span> <span class="k">=</span> <span class="s">"my amazing service"</span><span class="o">,</span>
@@ -92,7 +103,13 @@
 	<span class="n">sourceMetadata</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">event</span> <span class="k">=</span> <span class="nc">TriggeredV2</span><span class="o">(</span><span class="n">metadata</span><span class="o">,</span> <span class="n">templateData</span><span class="o">,</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">None</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">event</span> <span class="k">=</span> <span class="nc">TriggeredV3</span><span class="o">(</span>
+  <span class="n">metadata</span> <span class="k">=</span> <span class="n">metadata</span><span class="o">,</span> 
+  <span class="n">templateData</span> <span class="k">=</span> <span class="n">templateData</span><span class="o">,</span> 
+  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> 
+  <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> 
+  <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
+<span class="o">)</span>
 </code></pre>
 </div>
 
@@ -111,7 +128,7 @@ object CanaryTemplateData {
 case class CanaryTemplateData(traceToken: String, optionalString: Option[String], things: Seq[CanaryTemplateData.Thing]) { ... }
 
 Use these classes to construct an instance of CanaryTemplateData, then call its `convertToTemplateData`
-to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` event.
+to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` event.
 </code></pre>
 </div>
 
@@ -125,7 +142,7 @@ to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` eve
 
 <p>Rest assured that your code will compile just fine with sbt.</p>
 
-<p>If you are using a IntelliJ 2017.1 (currently available as an EAP, due to be officially released in spring 2017), there will be a little icon next to the annotation:</p>
+<p>If you are using IntelliJ 2017.1 or newer, there will be a little icon next to the annotation:</p>
 
 <p><img src="../img/intellij-expand-macro.png" alt="IntelliJ: expand scala.meta macro" /></p>
 
@@ -140,16 +157,17 @@ to create a `Map[String, TemplateData]` suitable for used in a `TriggeredV2` eve
 <p>If you are using Scala, we recommend that you use our <code class="highlighter-rouge">comms-kafka-serialisation</code> library to help you encode the event as Avro JSON:</p>
 
 <div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Serialisation.avroSerializer</span>
+<span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Codecs._</span>
 
-<span class="k">val</span> <span class="n">serializer</span> <span class="k">=</span> <span class="n">avroSerializer</span><span class="o">[</span><span class="kt">TriggeredV2</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">serializer</span> <span class="k">=</span> <span class="n">avroSerializer</span><span class="o">[</span><span class="kt">TriggeredV3</span><span class="o">]</span>
 
-<span class="k">val</span> <span class="n">json</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Byte</span><span class="o">]</span> <span class="k">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="o">(</span><span class="s">"comms.triggered.v2"</span><span class="o">,</span> <span class="n">event</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">json</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Byte</span><span class="o">]</span> <span class="k">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="o">(</span><span class="s">"comms.triggered.v3"</span><span class="o">,</span> <span class="n">event</span><span class="o">)</span>
 </code></pre>
 </div>
 
 <h2 id="example-project">Example project</h2>
 
-<p>We have a full working example project showing the recommended way to build and send a <code class="highlighter-rouge">TriggeredV2</code> event in Scala: <a href="https://github.com/ovotech/comms-example-trigger">https://github.com/ovotech/comms-example-trigger</a></p>
+<p>We have a full working example project showing the recommended way to build and send a <code class="highlighter-rouge">TriggeredV3</code> event in Scala: <a href="https://github.com/ovotech/comms-example-trigger">https://github.com/ovotech/comms-example-trigger</a></p>
 </section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/comms-platform/highlight/highlight.pack.js"></script><script>hljs.configure({
 languages:['scala','java','bash']
 });

@@ -38,7 +38,7 @@
 
 <h3 id="channels">Channels</h3>
 
-<p>Currently email and SMS channels are supported and you must provide either or both, an email and SMS template.</p>
+<p>Currently email and SMS channels are supported and you must provide either an email template, an SMS template or both.</p>
 
 <h4 id="email">Email</h4>
 
@@ -87,15 +87,22 @@
 <p>The following fields are provided automatically for you to refer to in your templates:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">profile.firstName</code></li>
-  <li><code class="highlighter-rouge">profile.lastName</code></li>
+  <li><code class="highlighter-rouge">profile.firstName</code> (only for customer comms)</li>
+  <li><code class="highlighter-rouge">profile.lastName</code> (only for customer comms)</li>
   <li><code class="highlighter-rouge">recipient.emailAddress</code> (only available in email templates, not in other channels)</li>
+  <li><code class="highlighter-rouge">recipient.phoneNumber</code> (only available in SMS templates, not in other channels)</li>
   <li><code class="highlighter-rouge">system.year</code></li>
   <li><code class="highlighter-rouge">system.month</code></li>
   <li><code class="highlighter-rouge">system.dayOfMonth</code></li>
 </ul>
 
 <p>We can add more of these fields if necessary. If you would like a new field added, please get in touch.</p>
+
+<h4 id="customer-and-non-customer-comms">Customer and non-customer comms</h4>
+
+<p>If you specify an OVO customer ID for the <code class="highlighter-rouge">deliverTo</code> field when you trigger your comm, we look up the customer’s profile and provide it for use in your template as the <code class="highlighter-rouge">profile.*</code> fields.</p>
+
+<p>When you send a non-customer comm, by specifying contact details instead of a customer ID, we do not provide any <code class="highlighter-rouge">profile.*</code> fields.</p>
 
 <h3 id="simple-example-template">Simple example template</h3>
 
@@ -109,7 +116,7 @@
 </code></pre>
 </div>
 
-<p>In this case, <code class="highlighter-rouge">profile.firstName</code> and <code class="highlighter-rouge">profile.lastName</code> are provided automatically, so you would need to provide the values of <code class="highlighter-rouge">result</code> and <code class="highlighter-rouge">thing</code> in your Kafka event when you trigger a comm. See the <a href="events.html">Events</a> page for more details of how this is done.</p>
+<p>In this case, <code class="highlighter-rouge">profile.firstName</code> and <code class="highlighter-rouge">profile.lastName</code> are provided automatically (assuming this is a customer comm), so you would need to provide the values of <code class="highlighter-rouge">result</code> and <code class="highlighter-rouge">thing</code> in your Kafka event when you trigger a comm. See the <a href="events.html">Events</a> page for more details of how this is done.</p>
 
 <h3 id="more-complex-example">More complex example</h3>
 

@@ -1,12 +1,12 @@
 <html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>OVO Comms Platform</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="comms-platform" /><meta name="author" content="Comms team" /><meta name="og:image" content="/comms-platform/img/poster.png" /><meta name="og:title" content="OVO Comms Platform" /><meta name="og:site_name" content="OVO Comms Platform" /><meta name="og:url" content="https://ovoenergy.slack.com/messages/hello_comms/" /><meta name="og:type" content="website" /><meta name="og:description" content="comms-platform" /><meta name="twitter:image" content="/comms-platform/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/comms-platform/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/comms-platform/highlight/styles/default.css" /><link rel="stylesheet" href="/comms-platform/css/style.css" /><link rel="stylesheet" href="/comms-platform/css/palette.css" /><link rel="stylesheet" href="/comms-platform/css/docs.css" /><link rel="stylesheet" href="/comms-platform/css/home.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><ul id="sidebar" class="sidebar-nav"><li class="sidebar-brand"><a href="/comms-platform/" class="brand"><div class="brand-wrapper" style="background:url('/comms-platform/img/sidebar_brand.png') no-repeat"><span>OVO Comms Platform</span></div></a></li> <li><a href="/comms-platform/docs/index.html" class="">Getting Started</a></li> <li><a href="/comms-platform/docs/templates.html" class="">Templates</a></li> <li><a href="/comms-platform/docs/events.html" class="">Events</a></li> <li><a href="/comms-platform/docs/scheduling.html" class=" active ">Scheduling</a></li> <li><a href="/comms-platform/docs/channels.html" class="">Channels</a></li></ul></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-eye"></i><span>WATCH<span id="eyes" class="label label-default">--</span></span></a></li><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-star-o"></i><span>STARS<span id="stars" class="label label-default">--</span></span></a></li><li><a href="#" onclick="shareSiteTwitter('OVO Comms Platform comms-platform');"><i class="fa fa-twitter"></i></a></li><li><a href="#" onclick="shareSiteFacebook('OVO Comms Platform comms-platform');"><i class="fa fa-facebook"></i></a></li><li><a href="#" onclick="shareSiteGoogle();"><i class="fa fa-google-plus"></i></a></li></ul></div></div></div></div><div id="content" data-github-owner="ovotech" data-github-repo="comms-platform"><div class="content-wrapper"><section><h1 id="scheduling">Scheduling</h1>
 
-<p>Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV2 event (see the <a href="events.html">events</a> page for more info on triggered events).</p>
+<p>Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV3 event (see the <a href="events.html">events</a> page for more info on triggered events).</p>
 
 <h1 id="how-do-i-schedule-a-comm">How do I schedule a comm?</h1>
 
-<p>When generating a TriggeredV2 event (<a href="events.html">as explained in the events page</a>), simply include the date and time you want the comm to be delivered in the ISO-8601 format.</p>
+<p>When generating a TriggeredV3 event (<a href="events.html">as explained in the events page</a>), simply include the date and time you want the comm to be delivered. The timestamp is represented as a <code class="highlighter-rouge">java.time.Instant</code> in the Scala model, and as timestamp-millis in Avro.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV2</span><span class="o">,</span> <span class="nc">Metadata</span><span class="o">,</span> <span class="nc">TemplateData</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model._</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.comms.triggered.Template</span>
 
 <span class="nd">@Template</span><span class="o">(</span><span class="s">"service"</span><span class="o">,</span> <span class="s">"example-for-docs"</span><span class="o">,</span> <span class="s">"0.1"</span><span class="o">)</span>
@@ -23,10 +23,10 @@
   <span class="o">))</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">Metadata</span><span class="o">(</span>
-	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
+<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">MetadataV2</span><span class="o">(</span>
+	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
 	<span class="n">eventId</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
-	<span class="n">customerId</span> <span class="k">=</span> <span class="s">"my-customer"</span><span class="o">,</span>
+	<span class="n">deliverTo</span> <span class="k">=</span> <span class="nc">Customer</span><span class="o">(</span><span class="s">"my-customer"</span><span class="o">),</span>
 	<span class="n">traceToken</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
 	<span class="n">commManifest</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">.</span><span class="n">commManifest</span><span class="o">,</span> <span class="c1">// use the generated comm manifest in the companion object
 </span>	<span class="n">friendlyDescription</span> <span class="k">=</span> <span class="s">"awesome comm"</span><span class="o">,</span>
@@ -39,29 +39,29 @@
     
 <span class="k">val</span> <span class="n">templateData</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">TemplateData</span><span class="o">]</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convertToTemplateData</span>
 
-<span class="k">val</span> <span class="n">triggered</span> <span class="k">=</span> <span class="nc">TriggeredV2</span><span class="o">(</span>
+<span class="k">val</span> <span class="n">triggered</span> <span class="k">=</span> <span class="nc">TriggeredV3</span><span class="o">(</span>
   <span class="n">metadata</span> <span class="k">=</span> <span class="n">metadata</span><span class="o">,</span>
   <span class="n">templateData</span> <span class="k">=</span> <span class="n">templateData</span><span class="o">,</span> 
-  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">180</span><span class="o">).</span><span class="n">toString</span><span class="o">),</span>
+  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">180</span><span class="o">)),</span>
   <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span>
   <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
 </code></pre>
 </div>
 
-<p>Then send the TriggeredV2 event as described in the <a href="events.html">events page</a> to <code class="highlighter-rouge">comms.triggered.v2</code></p>
+<p>Then send the TriggeredV3 event as described in the <a href="events.html">events page</a> to <code class="highlighter-rouge">comms.triggered.v3</code></p>
 
 <h1 id="why-should-i-specify-when-my-comm-expires">Why should I specify when my comm expires?</h1>
 
 <p>If your comm is time sensitive (for example, will no longer be relevant after a certain date/time), we advise you also include an expireAt value in the event. This way if something goes wrong and the comm has not been sent within the time period you specify, we won’t send it at all.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV2</span><span class="o">,</span> <span class="nc">Metadata</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">MetadataV2</span><span class="o">}</span>
 
-<span class="k">val</span> <span class="n">triggered</span> <span class="k">=</span> <span class="nc">TriggeredV2</span><span class="o">(</span>
+<span class="k">val</span> <span class="n">triggered</span> <span class="k">=</span> <span class="nc">TriggeredV3</span><span class="o">(</span>
   <span class="n">metadata</span> <span class="k">=</span> <span class="n">metadata</span><span class="o">,</span>
   <span class="n">templateData</span> <span class="k">=</span> <span class="n">templateData</span><span class="o">,</span> 
-  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">180</span><span class="o">).</span><span class="n">toString</span><span class="o">),</span>
-  <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">360</span><span class="o">).</span><span class="n">toString</span><span class="o">),</span>
+  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">180</span><span class="o">)),</span>
+  <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">360</span><span class="o">)),</span>
   <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
 </code></pre>
@@ -71,23 +71,25 @@
 
 <p>To cancel a scheduled comm, you need to send a Cancelled event (<a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/CancellationRequested.avsc">avro schema</a>, <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/CancellationRequested.scala">scala case class</a>) to <code class="highlighter-rouge">comms.cancellation.requested</code>. We currently support cancelling scheduled comms by a combination of customer id and the comm name:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">CancellationRequested</span><span class="o">,</span> <span class="nc">GenericMetadata</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">CancellationRequestedV2</span><span class="o">,</span> <span class="nc">GenericMetadataV2</span><span class="o">}</span>
 
-<span class="k">val</span> <span class="n">genericMetadata</span> <span class="k">=</span> <span class="nc">GenericMetadata</span><span class="o">(</span>
-  <span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
+<span class="k">val</span> <span class="n">genericMetadata</span> <span class="k">=</span> <span class="nc">GenericMetadataV2</span><span class="o">(</span>
+  <span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
   <span class="n">eventId</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
   <span class="n">traceToken</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
   <span class="n">source</span> <span class="k">=</span> <span class="s">"my amazing service"</span><span class="o">,</span>
   <span class="n">canary</span> <span class="k">=</span> <span class="kc">true</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">cancellationRequested</span> <span class="k">=</span> <span class="nc">CancellationRequested</span><span class="o">(</span>
+<span class="k">val</span> <span class="n">cancellationRequested</span> <span class="k">=</span> <span class="nc">CancellationRequestedV2</span><span class="o">(</span>
   <span class="n">metadata</span> <span class="k">=</span> <span class="n">genericMetadata</span><span class="o">,</span>
   <span class="n">commName</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">.</span><span class="n">commManifest</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="c1">// use the generated comm manifest in the companion object
 </span>  <span class="n">customerId</span> <span class="k">=</span> <span class="s">"my-customer"</span>
 <span class="o">)</span>
 </code></pre>
 </div>
+
+<p>Note: we do not currently support cancellation of non-customer comms. We can implement this if there is a need for it.</p>
 
 <h1 id="how-can-i-get-feedback-on-my-scheduled-comms">How can I get feedback on my scheduled comms?</h1>
 
@@ -107,22 +109,23 @@
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/OrchestrationStarted.avsc">Avro Schema</a></td>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/OrchestrationStarted.scala">Scala Case Class</a></td>
-      <td>Kafka topic : comms.orchestration.started</td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/OrchestrationStartedV2.avsc">Avro Schema</a></td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/OrchestrationStartedV2.scala">Scala Case Class</a></td>
+      <td>Kafka topic : comms.orchestration.started.v2</td>
     </tr>
   </tbody>
 </table>
 
 <h3 id="cancelled">Cancelled</h3>
+
 <p>Generated to confirm the successful cancellation of a scheduled comm. Please note: for each CancellationRequested event, there may be multiple comms cancelled which will result in multiple Cancelled events being generated.</p>
 
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/Cancelled.avsc">Avro Schema</a></td>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/Cancelled.scala">Scala Case Class</a></td>
-      <td>Kafka topic : comms.cancelled</td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/CancelledV2.avsc">Avro Schema</a></td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/CancelledV2.scala">Scala Case Class</a></td>
+      <td>Kafka topic : comms.cancelled.v2</td>
     </tr>
   </tbody>
 </table>
@@ -133,9 +136,9 @@
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/FailedCancellation.avsc">Avro Schema</a></td>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedCancellation.scala">Scala Case Class</a></td>
-      <td>Kafka topic: comms.failed.cancellation</td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/FailedCancellationV2.avsc">Avro Schema</a></td>
+      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedCancellationV2.scala">Scala Case Class</a></td>
+      <td>Kafka topic: comms.failed.cancellation.v2</td>
     </tr>
   </tbody>
 </table>

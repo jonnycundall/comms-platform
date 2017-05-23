@@ -45,7 +45,7 @@ If a customer has no Service Communication Preferences this indicates that they 
 
 <p>The following example is triggering a MeterReads comm, specifying that we would like to send the comm over SMS if possible, followed by email and then any other channel.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">Metadata</span><span class="o">,</span> <span class="nc">TriggeredV2</span><span class="o">,</span> <span class="nc">Channel</span><span class="o">,</span> <span class="nc">TemplateData</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model._</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.comms.triggered.Template</span>
                                                                  
 <span class="nd">@Template</span><span class="o">(</span><span class="s">"service"</span><span class="o">,</span> <span class="s">"example-for-docs"</span><span class="o">,</span> <span class="s">"0.1"</span><span class="o">)</span>
@@ -62,10 +62,10 @@ If a customer has no Service Communication Preferences this indicates that they 
   <span class="o">))</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">Metadata</span><span class="o">(</span>
-	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">OffsetDateTime</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
+<span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">MetadataV2</span><span class="o">(</span>
+	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
 	<span class="n">eventId</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
-	<span class="n">customerId</span> <span class="k">=</span> <span class="s">"my-customer"</span><span class="o">,</span>
+	<span class="n">deliverTo</span> <span class="k">=</span> <span class="nc">Customer</span><span class="o">(</span><span class="s">"my-customer"</span><span class="o">),</span>
 	<span class="n">traceToken</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
 	<span class="n">commManifest</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">.</span><span class="n">commManifest</span><span class="o">,</span> <span class="c1">// use the generated comm manifest in the companion object
 </span>	<span class="n">friendlyDescription</span> <span class="k">=</span> <span class="s">"awesome comm"</span><span class="o">,</span>
@@ -75,10 +75,16 @@ If a customer has no Service Communication Preferences this indicates that they 
 	<span class="n">sourceMetadata</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
 
-<span class="k">val</span> <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="nc">Channel</span><span class="o">.</span><span class="nc">SMS</span><span class="o">,</span> <span class="nc">Channel</span><span class="o">.</span><span class="nc">Email</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">List</span><span class="o">(</span><span class="nc">SMS</span><span class="o">,</span> <span class="nc">Email</span><span class="o">))</span>
 <span class="k">val</span> <span class="n">templateData</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">TemplateData</span><span class="o">]</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convertToTemplateData</span>
 
-<span class="k">val</span> <span class="n">event</span> <span class="k">=</span> <span class="nc">TriggeredV2</span><span class="o">(</span><span class="n">metadata</span><span class="o">,</span> <span class="n">templateData</span><span class="o">,</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">None</span><span class="o">,</span> <span class="n">preferredChannels</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">event</span> <span class="k">=</span> <span class="nc">TriggeredV3</span><span class="o">(</span>
+  <span class="n">metadata</span> <span class="k">=</span> <span class="n">metadata</span><span class="o">,</span> 
+  <span class="n">templateData</span> <span class="k">=</span> <span class="n">templateData</span><span class="o">,</span> 
+  <span class="n">deliverAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> 
+  <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> 
+  <span class="n">preferredChannels</span> <span class="k">=</span> <span class="n">preferredChannels</span>
+<span class="o">)</span>
 </code></pre>
 </div>
 
