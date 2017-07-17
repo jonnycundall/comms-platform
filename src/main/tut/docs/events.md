@@ -13,7 +13,7 @@ In order to send a comm to a customer, you need to trigger the comm by sending a
 
 The `TriggeredV3` event has the following fields: 
 
-* `metadata` - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the [Avro schema](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
+* `metadata` - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the [source code](https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/MetadataV2.scala) and in the Avro schema (available in the schema registry).
 * `templateData` - This is the customer-specific data you want to use to fill in the placeholders in your comm template. **Note:** If you fail to fill in all the placeholders in the template, your comm will not be sent!
 * `deliverAt` (optional) - If you want to schedule the comm to be sent in the future, use this field to specify the delivery time. See the [scheduling](scheduling.html) page for more details.
 * `expireAt` (optional) - If your comm is time sensitive, you can use this field to specify the latest delivery time. See the [scheduling](scheduling.html) page for more details.
@@ -23,7 +23,7 @@ The `TriggeredV3` event has the following fields:
 
 As part of the metadata, you need to specify the `deliverTo` field. You can provide one of two things:
 
-* A `Customer`, containing a customer ID, if you want to send the comm to an OVO customer.
+* A `Customer`, containing a global customer ID, if you want to send the comm to an OVO customer.
 * A `ContactDetails`, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.
 
 ### Building the event
@@ -155,17 +155,25 @@ However, we recommend that you un-expand the macro again afterwards (currently t
 
 ### Sending the event
 
-All events must be encoded as Avro JSON. The Avro schemas are available [here](https://github.com/ovotech/comms-kafka-messages/tree/master/schemas).
+Events should be sent using the Kafka cluster on Aiven.
 
-If you are using Scala, we recommend that you use our `comms-kafka-serialisation` library to help you encode the event as Avro JSON:
+All events must be encoded as Avro binary, with the schema ID in a header. The Avro schemas are all registered in the schema registry on Aiven.
+
+If you are using Scala, we recommend that you use our [`comms-kafka-serialisation`](https://github.com/ovotech/comms-kafka-serialisation) library to help you encode the event as Avro binary:
 
 ```tut:silent
-import com.ovoenergy.comms.serialisation.Serialisation.avroSerializer
+import com.ovoenergy.comms.serialisation.Serialisation.avroBinarySchemaRegistrySerializer
 import com.ovoenergy.comms.serialisation.Codecs._
+import com.ovoenergy.kafka.serialization.avro.SchemaRegistryClientSettings
 
-val serializer = avroSerializer[TriggeredV3]
+val schemaRegistryUrl = sys.env("SCHEMA_REGISTRY_URL")
+val schemaRegistryUsername = sys.env("SCHEMA_REGISTRY_USERNAME")
+val schemaRegistryPassword = sys.env("SCHEMA_REGISTRY_PASSWORD")
+val schemaRegistryClientSettings = SchemaRegistryClientSettings(schemaRegistryUrl, schemaRegistryUsername, schemaRegistryPassword)
 
-val json: Array[Byte] = serializer.serialize("comms.triggered.v3", event)
+val serializer = avroBinarySchemaRegistrySerializer[TriggeredV3](schemaRegistryClientSettings, "comms.triggered.v3")
+
+val bytes: Array[Byte] = serializer.serialize("comms.triggered.v3", event)
 ```
 
 ## Example project
