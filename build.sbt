@@ -20,6 +20,7 @@ micrositePalette := Map(
 
 scalaVersion := "2.11.8"
 resolvers += Resolver.bintrayRepo("ovotech", "maven")
+resolvers += "confluent" at "http://packages.confluent.io/maven/"
 libraryDependencies ++= Seq(
   "com.ovoenergy" %% "comms-kafka-messages" % "1.25",
   "com.ovoenergy" %% "comms-triggered-event-builder" % "1.1",
