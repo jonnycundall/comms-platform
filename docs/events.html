@@ -9,7 +9,7 @@
 <p>The <code class="highlighter-rouge">TriggeredV3</code> event has the following fields:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">metadata</code> - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the <a href="https://github.com/ovotech/comms-kafka-messages/tree/master/schemas">Avro schema</a>.</li>
+  <li><code class="highlighter-rouge">metadata</code> - This includes a unique ID for the comm and a DeliverTo (either the ID of the customer you wish to send the given comm to, or the contact details if the comm recipient does not have a Salesforce account). The fields are documented in the <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/MetadataV2.scala">source code</a> and in the Avro schema (available in the schema registry).</li>
   <li><code class="highlighter-rouge">templateData</code> - This is the customer-specific data you want to use to fill in the placeholders in your comm template. <strong>Note:</strong> If you fail to fill in all the placeholders in the template, your comm will not be sent!</li>
   <li><code class="highlighter-rouge">deliverAt</code> (optional) - If you want to schedule the comm to be sent in the future, use this field to specify the delivery time. See the <a href="scheduling.html">scheduling</a> page for more details.</li>
   <li><code class="highlighter-rouge">expireAt</code> (optional) - If your comm is time sensitive, you can use this field to specify the latest delivery time. See the <a href="scheduling.html">scheduling</a> page for more details.</li>
@@ -21,7 +21,7 @@
 <p>As part of the metadata, you need to specify the <code class="highlighter-rouge">deliverTo</code> field. You can provide one of two things:</p>
 
 <ul>
-  <li>A <code class="highlighter-rouge">Customer</code>, containing a customer ID, if you want to send the comm to an OVO customer.</li>
+  <li>A <code class="highlighter-rouge">Customer</code>, containing a global customer ID, if you want to send the comm to an OVO customer.</li>
   <li>A <code class="highlighter-rouge">ContactDetails</code>, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.</li>
 </ul>
 
@@ -152,16 +152,24 @@ to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` even
 
 <h3 id="sending-the-event">Sending the event</h3>
 
-<p>All events must be encoded as Avro JSON. The Avro schemas are available <a href="https://github.com/ovotech/comms-kafka-messages/tree/master/schemas">here</a>.</p>
+<p>Events should be sent using the Kafka cluster on Aiven.</p>
 
-<p>If you are using Scala, we recommend that you use our <code class="highlighter-rouge">comms-kafka-serialisation</code> library to help you encode the event as Avro JSON:</p>
+<p>All events must be encoded as Avro binary, with the schema ID in a header. The Avro schemas are all registered in the schema registry on Aiven.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Serialisation.avroSerializer</span>
+<p>If you are using Scala, we recommend that you use our <a href="https://github.com/ovotech/comms-kafka-serialisation"><code class="highlighter-rouge">comms-kafka-serialisation</code></a> library to help you encode the event as Avro binary:</p>
+
+<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Serialisation.avroBinarySchemaRegistrySerializer</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Codecs._</span>
+<span class="k">import</span> <span class="nn">com.ovoenergy.kafka.serialization.avro.SchemaRegistryClientSettings</span>
 
-<span class="k">val</span> <span class="n">serializer</span> <span class="k">=</span> <span class="n">avroSerializer</span><span class="o">[</span><span class="kt">TriggeredV3</span><span class="o">]</span>
+<span class="k">val</span> <span class="n">schemaRegistryUrl</span> <span class="k">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">env</span><span class="o">(</span><span class="s">"SCHEMA_REGISTRY_URL"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">schemaRegistryUsername</span> <span class="k">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">env</span><span class="o">(</span><span class="s">"SCHEMA_REGISTRY_USERNAME"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">schemaRegistryPassword</span> <span class="k">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">env</span><span class="o">(</span><span class="s">"SCHEMA_REGISTRY_PASSWORD"</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">schemaRegistryClientSettings</span> <span class="k">=</span> <span class="nc">SchemaRegistryClientSettings</span><span class="o">(</span><span class="n">schemaRegistryUrl</span><span class="o">,</span> <span class="n">schemaRegistryUsername</span><span class="o">,</span> <span class="n">schemaRegistryPassword</span><span class="o">)</span>
 
-<span class="k">val</span> <span class="n">json</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Byte</span><span class="o">]</span> <span class="k">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="o">(</span><span class="s">"comms.triggered.v3"</span><span class="o">,</span> <span class="n">event</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">serializer</span> <span class="k">=</span> <span class="n">avroBinarySchemaRegistrySerializer</span><span class="o">[</span><span class="kt">TriggeredV3</span><span class="o">](</span><span class="n">schemaRegistryClientSettings</span><span class="o">,</span> <span class="s">"comms.triggered.v3"</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">bytes</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Byte</span><span class="o">]</span> <span class="k">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="o">(</span><span class="s">"comms.triggered.v3"</span><span class="o">,</span> <span class="n">event</span><span class="o">)</span>
 </code></pre>
 </div>
 

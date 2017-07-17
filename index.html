@@ -23,7 +23,7 @@
 
 <h3 id="failed-events">Failed events</h3>
 
-<p>If you want to be informed about failures in real-time (e.g. for alerting), you can listen for <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/Failed.scala">Failed</a> events on the <code class="highlighter-rouge">comms.failed</code> Kafka topic.</p>
+<p>If you want to be informed about failures in real-time (e.g. for alerting), you can listen for <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedV2.scala">Failed</a> events on the <code class="highlighter-rouge">comms.failed.v2</code> Kafka topic.</p>
 
 <p>Whenever a failure occurs anywhere in our system that means we can’t deliver a comm, we publish an event to this topic.</p>
 

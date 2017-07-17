@@ -24,22 +24,22 @@
 <p>Unless specified by the customer in their communication preferences, comms will not be issued via said channel.</p>
 
 <div class="alert alert-info">
-If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Comminication Preferences are not taken into account.
+If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Communication Preferences are not taken into account.
 </div>
 
 <p>While the platform is only supporting notification comms, and only supporting email and SMS channels, if a customer has set their Service Communication Preferences to post rather than email, then post is removed from their list of Service Communication Preferences used by the platform.</p>
 
 <h2 id="customer-profile">Customer Profile</h2>
 
-<p>The customer-service provides us with contact details for a customer.</p>
+<p>The profiles service provides us with contact details for a customer.</p>
 
 <p>In order to send an email or SMS, an email address or mobile number are required respectively, if these are not present then the comm can not be issued over that channel.</p>
 
 <h2 id="preferred-channels">Preferred Channels</h2>
 
-<p>When a comm is <a href="events.html">triggered</a> the <code class="highlighter-rouge">preferredChannels</code> field is an ordered list of channels indicating the preferred channels to send the comm over.</p>
+<p>When you <a href="events.html">trigger</a> a comm you can provide a list of preferred channels by setting the <code class="highlighter-rouge">preferredChannels</code> field.</p>
 
-<p>This is a list of preferred channels and the comm may be issued over a channel not specified in this list.</p>
+<p>Note that this is only one of the inputs to the channel selection logic, so the comm may be issued over a channel not specified in this list.</p>
 
 <h3 id="example-triggered-event">Example Triggered Event</h3>
 

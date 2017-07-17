@@ -53,7 +53,7 @@
 
 <h1 id="why-should-i-specify-when-my-comm-expires">Why should I specify when my comm expires?</h1>
 
-<p>If your comm is time sensitive (for example, will no longer be relevant after a certain date/time), we advise you also include an expireAt value in the event. This way if something goes wrong and the comm has not been sent within the time period you specify, we won’t send it at all.</p>
+<p>If your comm is time sensitive (for example, will no longer be relevant after a certain date/time), we advise you also include an <code class="highlighter-rouge">expireAt</code> value in the event. This way if something goes wrong and the comm has not been sent within the time period you specify, we won’t send it at all.</p>
 
 <div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">MetadataV2</span><span class="o">}</span>
 
@@ -69,7 +69,7 @@
 
 <h1 id="how-do-i-cancel-scheduled-comms">How do I cancel scheduled comms?</h1>
 
-<p>To cancel a scheduled comm, you need to send a Cancelled event (<a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.4/CancellationRequested.avsc">avro schema</a>, <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/CancellationRequested.scala">scala case class</a>) to <code class="highlighter-rouge">comms.cancellation.requested</code>. We currently support cancelling scheduled comms by a combination of customer id and the comm name:</p>
+<p>To cancel a scheduled comm, you need to send a <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/CancellationRequestedV2.scala">CancellationRequestedV2</a> event to <code class="highlighter-rouge">comms.cancellation.requested.v2</code>. We currently support cancelling scheduled comms by a combination of customer ID and the comm name:</p>
 
 <div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">CancellationRequestedV2</span><span class="o">,</span> <span class="nc">GenericMetadataV2</span><span class="o">}</span>
 
@@ -95,7 +95,7 @@
 
 <ul>
   <li>
-    <p>Firstly you can see if a comm has been scheduled and what time for in our Audit log. Within the comm details breakdown page we now have a “Scheduled for” field (<a href="https://audit-log.ovo-comms.co.uk">PRD</a>, <a href="https://audit-log-uat.ovo-comms.co.uk">UAT</a>)</p>
+    <p>Firstly you can see if a comm has been scheduled and what time for in our Audit log. Within the comm details breakdown page we now have a “Scheduled for” field (<a href="https://audit-log.ovo-comms.co.uk">PRD</a>, <a href="https://audit-log.ovo-comms-uat.co.uk">UAT</a>)</p>
   </li>
   <li>
     <p>Additionally there are a number of events the comms platform produces which provide feedback on scheduled comms:</p>
@@ -109,7 +109,6 @@
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/OrchestrationStartedV2.avsc">Avro Schema</a></td>
       <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/OrchestrationStartedV2.scala">Scala Case Class</a></td>
       <td>Kafka topic : comms.orchestration.started.v2</td>
     </tr>
@@ -123,7 +122,6 @@
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/CancelledV2.avsc">Avro Schema</a></td>
       <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/CancelledV2.scala">Scala Case Class</a></td>
       <td>Kafka topic : comms.cancelled.v2</td>
     </tr>
@@ -131,12 +129,12 @@
 </table>
 
 <h3 id="failed-cancellation">Failed Cancellation</h3>
+
 <p>Generated if a Cancellation Request fails and we were unable to cancel the requested comm(s). Just as with Cancelled, there may be multiple comms which failed to cancel so there could be multiple failed Cancellation events as a result of a CancellationRequested event</p>
 
 <table>
   <tbody>
     <tr>
-      <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/schemas/1.22/FailedCancellationV2.avsc">Avro Schema</a></td>
       <td><a href="https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedCancellationV2.scala">Scala Case Class</a></td>
       <td>Kafka topic: comms.failed.cancellation.v2</td>
     </tr>
