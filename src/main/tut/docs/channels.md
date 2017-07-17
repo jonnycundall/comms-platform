@@ -27,22 +27,22 @@ For Service comms the customer is forced to choose either Post or Email, with SM
 Unless specified by the customer in their communication preferences, comms will not be issued via said channel.
 
 <div class="alert alert-info">
-If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Comminication Preferences are not taken into account.
+If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Communication Preferences are not taken into account.
 </div>
 
 While the platform is only supporting notification comms, and only supporting email and SMS channels, if a customer has set their Service Communication Preferences to post rather than email, then post is removed from their list of Service Communication Preferences used by the platform. 
 
 ## Customer Profile
 
-The customer-service provides us with contact details for a customer. 
+The profiles service provides us with contact details for a customer. 
 
 In order to send an email or SMS, an email address or mobile number are required respectively, if these are not present then the comm can not be issued over that channel.
 
 ## Preferred Channels
 
-When a comm is [triggered](events.html) the `preferredChannels` field is an ordered list of channels indicating the preferred channels to send the comm over.
+When you [trigger](events.html) a comm you can provide a list of preferred channels by setting the `preferredChannels` field.
 
-This is a list of preferred channels and the comm may be issued over a channel not specified in this list.
+Note that this is only one of the inputs to the channel selection logic, so the comm may be issued over a channel not specified in this list.
 
 ### Example Triggered Event
 

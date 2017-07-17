@@ -26,7 +26,7 @@ You can check the status of your comms using our [audit log service](https://aud
 
 ### Failed events
 
-If you want to be informed about failures in real-time (e.g. for alerting), you can listen for [Failed](https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/Failed.scala) events on the `comms.failed` Kafka topic. 
+If you want to be informed about failures in real-time (e.g. for alerting), you can listen for [Failed](https://github.com/ovotech/comms-kafka-messages/blob/master/src/main/scala/com/ovoenergy/comms/model/FailedV2.scala) events on the `comms.failed.v2` Kafka topic. 
 
 Whenever a failure occurs anywhere in our system that means we can't deliver a comm, we publish an event to this topic. 
 

@@ -7,6 +7,9 @@ This is the documentation microsite for the OVO comms platform.
 You must have jekyll installed: `gem install jekyll`.
 
 ```
+export SCHEMA_REGISTRY_URL=<Aiven UAT schema registry URL>
+export SCHEMA_REGISTRY_USERNAME=...
+export SCHEMA_REGISTRY_PASSWORD=...
 sbt makeMicrosite
 cd target/site
 jekyll serve
