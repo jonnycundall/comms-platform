@@ -21,10 +21,12 @@ The `TriggeredV3` event has the following fields:
 
 ### DeliverTo - customer vs non-customer comms
 
-As part of the metadata, you need to specify the `deliverTo` field. You can provide one of two things:
+As part of the metadata, you need to specify the `deliverTo` field. In case of SMS and email, you can provide either as `Customer` or `ContactDetails`, for print deliverTo must be a `ContactDetails` field:
 
-* A `Customer`, containing a global customer ID, if you want to send the comm to an OVO customer.
-* A `ContactDetails`, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.
+* A `Customer`, containing a global customer ID, if you want to send the comm to an OVO customer. Currently not available for print.
+* A `ContactDetails`, if you want to send the comm to an arbitrary recipient. You must provide details of at least one of the three channels.
+
+As customers cannot be referenced by the global customer ID for print templates, if required any additional information about the customer, such as first name, last name, it has to be included in the template data.
 
 ### Building the event
 

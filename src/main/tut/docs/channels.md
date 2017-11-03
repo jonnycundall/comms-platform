@@ -9,6 +9,7 @@ Comms can be issued over the following channels:
 
 * Email
 * SMS
+* Print
 
 Each time a comm is [triggered](events.html) the channel the comm is sent over is determined by the following factors:
 
@@ -16,13 +17,13 @@ Each time a comm is [triggered](events.html) the channel the comm is sent over i
 
 When a comm [template](templates.html) is published, the channels the comm is available over are specified. 
 
-A template obviously must have at least one channel, which can be either SMS or email. 
+A template obviously must have at least one channel, which can be either SMS, email or print. 
 
 ## Customer Communication Preferences
 
 Within My OVO customers set which channels they wish to receive comms over, they are able to do this for Service and Marketing comms separately.
  
-For Service comms the customer is forced to choose either Post or Email, with SMS available as an additional option.
+For Service comms the customer is forced to choose either Print or Email, with SMS available as an additional option.
 
 Unless specified by the customer in their communication preferences, comms will not be issued via said channel.
 
@@ -30,6 +31,7 @@ Unless specified by the customer in their communication preferences, comms will 
 If a customer has no Service Communication Preferences this indicates that they have not actually set any, as either email or post must be selected, and therefore the customer's Communication Preferences are not taken into account.
 </div>
 
+[comment]: <> (This statement has to be reviewed.)
 While the platform is only supporting notification comms, and only supporting email and SMS channels, if a customer has set their Service Communication Preferences to post rather than email, then post is removed from their list of Service Communication Preferences used by the platform. 
 
 ## Customer Profile
