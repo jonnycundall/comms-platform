@@ -6,7 +6,7 @@
 
 <p>When generating a TriggeredV3 event (<a href="events.html">as explained in the events page</a>), simply include the date and time you want the comm to be delivered. The timestamp is represented as a <code class="highlighter-rouge">java.time.Instant</code> in the Scala model, and as timestamp-millis in Avro.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model._</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model._</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.comms.triggered.Template</span>
 
 <span class="nd">@Template</span><span class="o">(</span><span class="s">"service"</span><span class="o">,</span> <span class="s">"example-for-docs"</span><span class="o">,</span> <span class="s">"0.1"</span><span class="o">)</span>
@@ -46,8 +46,7 @@
   <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span>
   <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Then send the TriggeredV3 event as described in the <a href="events.html">events page</a> to <code class="highlighter-rouge">comms.triggered.v3</code></p>
 
@@ -55,7 +54,7 @@
 
 <p>If your comm is time sensitive (for example, will no longer be relevant after a certain date/time), we advise you also include an <code class="highlighter-rouge">expireAt</code> value in the event. This way if something goes wrong and the comm has not been sent within the time period you specify, we won’t send it at all.</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">MetadataV2</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">MetadataV2</span><span class="o">}</span>
 
 <span class="k">val</span> <span class="n">triggered</span> <span class="k">=</span> <span class="nc">TriggeredV3</span><span class="o">(</span>
   <span class="n">metadata</span> <span class="k">=</span> <span class="n">metadata</span><span class="o">,</span>
@@ -64,14 +63,13 @@
   <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">().</span><span class="n">plusSeconds</span><span class="o">(</span><span class="mi">360</span><span class="o">)),</span>
   <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="how-do-i-cancel-scheduled-comms">How do I cancel scheduled comms?</h1>
 
 <p>To cancel a scheduled comm, you need to send a <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/CancellationRequestedV2.scala">CancellationRequestedV2</a> event to <code class="highlighter-rouge">comms.cancellation.requested.v2</code>. We currently support cancelling scheduled comms by a combination of customer ID and the comm name:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">CancellationRequestedV2</span><span class="o">,</span> <span class="nc">GenericMetadataV2</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">CancellationRequestedV2</span><span class="o">,</span> <span class="nc">GenericMetadataV2</span><span class="o">}</span>
 
 <span class="k">val</span> <span class="n">genericMetadata</span> <span class="k">=</span> <span class="nc">GenericMetadataV2</span><span class="o">(</span>
   <span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
@@ -86,8 +84,7 @@
   <span class="n">commName</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">.</span><span class="n">commManifest</span><span class="o">.</span><span class="n">name</span><span class="o">,</span> <span class="c1">// use the generated comm manifest in the companion object
 </span>  <span class="n">customerId</span> <span class="k">=</span> <span class="s">"my-customer"</span>
 <span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Note: we do not currently support cancellation of non-customer comms. We can implement this if there is a need for it.</p>
 

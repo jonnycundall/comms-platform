@@ -33,7 +33,7 @@
 
 <p>For example, say you have the following comm template:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Please give us your meter reads.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Please give us your meter reads.
 
 {{#if gas}}
   We need reads for the following gas meters:
@@ -50,23 +50,21 @@
   - {{this.firstNumber}} {{this.secondNumber}}  
   {{/each}}
 {{/if}}
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>You can generate a case class corresponding to this template using a macro annotation:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.triggered.Template</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.triggered.Template</span>
 
 <span class="nd">@Template</span><span class="o">(</span><span class="s">"service"</span><span class="o">,</span> <span class="s">"example-for-docs"</span><span class="o">,</span> <span class="s">"0.1"</span><span class="o">)</span>
 <span class="k">object</span> <span class="nc">MeterReadsComm</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This will generate a case class with the same name as the annotated object.</p>
 
 <p>You can then build an instance of the generated case class. Note how it matches the structure of the template:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">(</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="nc">MeterReadsComm</span><span class="o">(</span>
   <span class="n">gas</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> <span class="c1">// not a gas customer
 </span>	<span class="n">electricity</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="nc">MeterReadsComm</span><span class="o">.</span><span class="nc">Electricity</span><span class="o">(</span>
 		<span class="n">meters</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span>
@@ -76,20 +74,18 @@
 		<span class="o">)</span>
 	<span class="o">))</span>
 <span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>You can then convert it into the appropriate format for inclusion in a <code class="highlighter-rouge">TriggeredV3</code> event:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.TemplateData</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.TemplateData</span>
 
 <span class="k">val</span> <span class="n">templateData</span><span class="k">:</span> <span class="kt">Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">TemplateData</span><span class="o">]</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">convertToTemplateData</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now you’re ready to build an event:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">MetadataV2</span><span class="o">,</span> <span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">Customer</span><span class="o">}</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.model.</span><span class="o">{</span><span class="nc">MetadataV2</span><span class="o">,</span> <span class="nc">TriggeredV3</span><span class="o">,</span> <span class="nc">Customer</span><span class="o">}</span>
 <span class="k">val</span> <span class="n">metadata</span> <span class="k">=</span> <span class="nc">MetadataV2</span><span class="o">(</span>
 	<span class="n">createdAt</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="nc">Instant</span><span class="o">.</span><span class="n">now</span><span class="o">(),</span>
 	<span class="n">eventId</span> <span class="k">=</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">UUID</span><span class="o">.</span><span class="n">randomUUID</span><span class="o">().</span><span class="n">toString</span><span class="o">,</span>
@@ -110,8 +106,7 @@
   <span class="n">expireAt</span> <span class="k">=</span> <span class="nc">None</span><span class="o">,</span> 
   <span class="n">preferredChannels</span> <span class="k">=</span> <span class="nc">None</span>
 <span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="viewing-the-generated-code">Viewing the generated code</h4>
 
@@ -119,7 +114,7 @@
 
 <p>The output should look something like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Based on your comm template, the following code has been generated:
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Based on your comm template, the following code has been generated:
 
 object CanaryTemplateData {
   val commManifest: CommManifest = CommManifest(CommType.Service, "canary", "2.0")
@@ -129,8 +124,7 @@ case class CanaryTemplateData(traceToken: String, optionalString: Option[String]
 
 Use these classes to construct an instance of CanaryTemplateData, then call its `convertToTemplateData`
 to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` event.
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="a-note-about-intellij-support">A note about IntelliJ support</h4>
 
@@ -158,7 +152,7 @@ to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` even
 
 <p>If you are using Scala, we recommend that you use our <a href="https://github.com/ovotech/comms-kafka-serialisation"><code class="highlighter-rouge">comms-kafka-serialisation</code></a> library to help you encode the event as Avro binary:</p>
 
-<div class="language-scala highlighter-rouge"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Serialisation.avroBinarySchemaRegistrySerializer</span>
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Serialisation.avroBinarySchemaRegistrySerializer</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.comms.serialisation.Codecs._</span>
 <span class="k">import</span> <span class="nn">com.ovoenergy.kafka.serialization.avro.SchemaRegistryClientSettings</span>
 
@@ -170,8 +164,7 @@ to create a `Map[String, TemplateData]` suitable for use in a `TriggeredV3` even
 <span class="k">val</span> <span class="n">serializer</span> <span class="k">=</span> <span class="n">avroBinarySchemaRegistrySerializer</span><span class="o">[</span><span class="kt">TriggeredV3</span><span class="o">](</span><span class="n">schemaRegistryClientSettings</span><span class="o">,</span> <span class="s">"comms.triggered.v3"</span><span class="o">)</span>
 
 <span class="k">val</span> <span class="n">bytes</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Byte</span><span class="o">]</span> <span class="k">=</span> <span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="o">(</span><span class="s">"comms.triggered.v3"</span><span class="o">,</span> <span class="n">event</span><span class="o">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="example-project">Example project</h2>
 

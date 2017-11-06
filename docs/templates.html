@@ -6,7 +6,7 @@
 
 <p>A comm template is a directory on S3 that adheres to the following structure.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;comm-type&gt;/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;comm-type&gt;/
   &lt;comm-name&gt;/
     &lt;version&gt;/
       email/
@@ -17,8 +17,7 @@
         assets/ (optional)
       sms/
         body.txt
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Let’s go through some of that terminology.</p>
 
@@ -80,7 +79,7 @@
 
 <p>We support a subset of <a href="http://handlebarsjs.com/">Handlebars</a> syntax for templates.</p>
 
-<p>As well as plain old Mustache-style placeholders (<code class="highlighter-rouge"><span class="p">{</span><span class="err">{foo</span><span class="p">}</span><span class="err">}</span></code>), you can also write conditionals using <code class="highlighter-rouge"><span class="p">{</span><span class="err">{#if</span><span class="w"> </span><span class="err">foo</span><span class="p">}</span><span class="err">}</span></code>, and you can loop through lists of things using <code class="highlighter-rouge"><span class="p">{</span><span class="err">{#each</span><span class="w"> </span><span class="err">things</span><span class="p">}</span><span class="err">}</span></code>.</p>
+<p>As well as plain old Mustache-style placeholders (<code class="highlighter-rouge">{{foo}}</code>), you can also write conditionals using <code class="highlighter-rouge">{{#if foo}}</code>, and you can loop through lists of things using <code class="highlighter-rouge">{{#each things}}</code>.</p>
 
 <h3 id="built-in-data">Built-in data</h3>
 
@@ -108,13 +107,12 @@
 
 <p>Here’s a hypothetical HTML email body template:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;p&gt;Hello {{profile.firstName}} {{profile.lastName}}!&lt;/p&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;Hello {{profile.firstName}} {{profile.lastName}}!&lt;/p&gt;
 
 &lt;p&gt;Thanks for doing that thing you just did. The result was: {{result}}.&lt;/p&gt;
 
 &lt;p&gt;Here's another piece of data you might find useful: {{thing}}.&lt;p&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In this case, <code class="highlighter-rouge">profile.firstName</code> and <code class="highlighter-rouge">profile.lastName</code> are provided automatically (assuming this is a customer comm), so you would need to provide the values of <code class="highlighter-rouge">result</code> and <code class="highlighter-rouge">thing</code> in your Kafka event when you trigger a comm. See the <a href="events.html">Events</a> page for more details of how this is done.</p>
 
@@ -122,7 +120,7 @@
 
 <p>Here’s another hypothetical example that includes conditionals and loops:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;p&gt;Hello. Please give us your meter reads.&lt;/p&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;Hello. Please give us your meter reads.&lt;/p&gt;
 
 {{#if gas}}
   &lt;div&gt;
@@ -149,14 +147,13 @@
 
   &lt;/div&gt;
 {{/if}}
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="partials">Partials</h3>
 
 <p>For emails we provide a common HTML email header and footer for use in comms of type <code class="highlighter-rouge">Service</code>.</p>
 
-<p>You can include these in your Handlebars templates using the standard Handlebars partial syntax: <code class="highlighter-rouge"><span class="p">{</span><span class="err">{&gt;</span><span class="w"> </span><span class="err">header</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code> and <code class="highlighter-rouge"><span class="p">{</span><span class="err">{&gt;</span><span class="w"> </span><span class="err">footer</span><span class="w"> </span><span class="p">}</span><span class="err">}</span></code>.</p>
+<p>You can include these in your Handlebars templates using the standard Handlebars partial syntax: <code class="highlighter-rouge">{{&gt; header }}</code> and <code class="highlighter-rouge">{{&gt; footer }}</code>.</p>
 
 <h2 id="templates-app">Templates app</h2>
 
