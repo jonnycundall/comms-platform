@@ -91,11 +91,10 @@ This element has the following mandatory and optional fields:
     - line 2
     - country
 			
-For print
- (`<div id="letterAddress"> `)
+
 ##### Footers
 
-To add footer for every page of a letter, the content of the footer has to be encapsulated by the <footer> tag. It is importent that the <footer> element has to be the first element in the body. 
+To add footer for every page of a letter, the content of the footer has to be encapsulated by the <footer> tag. It is important that the <footer> element has to be the first element in the body. 
 
 The bottom margin of the pages have to be offset by the height of the footer, by adding the `@page {margin-bottom: 30mm;}` css rule to the `<style>` element in the head of the template. For a 30mm high footer this will look the following: 
 
@@ -138,10 +137,10 @@ h1 {
 
 ##### Assets
 Similarly to email, a print template can also reference optional assets, however images have to meet the following criterias:  
- - encoded in a CMYK colourspace supporting format, such as tiff or jpg. 
+ - encoded in one of the following CMYK colourspace supporting formats: tif, tiff, jpg, jpeg. 
  - its size is set to ensure that it fits onto a page, if an image is wider or higher than the page, the template will be rejected.
 
-Templates cannot contain scripts and cannot reference third party stylesheets. 
+Templates cannot contain scripts and cannot reference third party stylesheets, however stylesheets can be uploaded as assets.
 
 
 ## Handlebars syntax
