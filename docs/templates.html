@@ -75,6 +75,82 @@
 
 <p>More on channels <a href="channels.html">here</a>.</p>
 
+<h4 id="print">Print</h4>
+<p>A Print template consists of a single template file:</p>
+<ul>
+  <li><code class="highlighter-rouge">body.html</code> is a Handlebars template for the content of the letter</li>
+</ul>
+
+<h5 id="address">Address</h5>
+<p>Print templates must include a div element with the id set to letterAddress. 
+This element has the following mandatory and optional fields:</p>
+<ul>
+  <li>Mandatory
+    <ul>
+      <li>line 1</li>
+      <li>postcode</li>
+      <li>town</li>
+      <li>county</li>
+    </ul>
+  </li>
+  <li>Optional
+    <ul>
+      <li>line 2</li>
+      <li>country</li>
+    </ul>
+  </li>
+</ul>
+
+<h5 id="footers">Footers</h5>
+
+<p>To add footer for every page of a letter, the content of the footer has to be encapsulated by the &lt;footer&gt; tag. It is important that the &lt;footer&gt; element has to be the first element in the body.</p>
+
+<p>The bottom margin of the pages have to be offset by the height of the footer, by adding the <code class="highlighter-rouge">@page {margin-bottom: 30mm;}</code> css rule to the <code class="highlighter-rouge">&lt;style&gt;</code> element in the head of the template. For a 30mm high footer this will look the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+
+    &lt;style&gt;
+        @page {
+            margin-bottom: 30mm;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+</code></pre></div></div>
+
+<h5 id="page-breaks">Page Breaks</h5>
+<p>As the content of the letter is broke into pages when rendering, in case the last element on a page exceeds the remaining space at the bottom of the page, the element is split and overflows to the next page.</p>
+
+<p>By adding the <code class="highlighter-rouge">break-inside: avoid</code> parameter to the style of the element we can avoid the element being split over two pages and enforce the entire element to be placed onto the next page.</p>
+
+<h5 id="colours">Colours</h5>
+<p>Letters are printed on industrial printers which work with CMYK colour encoding.</p>
+
+<p>To ensure that the printed document stylistically consistent, colours in print templates have to be CMYK encoded. For example:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>h1 {
+    color: cmyk(83%, 10%, 100%, 1%);
+    font-weight:normal;
+    font-size: 18px;
+}
+
+.infoBox {
+    border-radius: 10px;
+    border: solid cmyk(30%, 0%, 40%, 0%) 2px;
+    padding: 10px;
+    padding-top: 0px;
+}
+</code></pre></div></div>
+
+<h5 id="assets-1">Assets</h5>
+<p>Similarly to email, a print template can also reference optional assets, however images have to meet the following criterias:</p>
+<ul>
+  <li>encoded in one of the following CMYK colourspace supporting formats: tif, tiff, jpg, jpeg.</li>
+  <li>its size is set to ensure that it fits onto a page, if an image is wider or higher than the page, the template will be rejected.</li>
+</ul>
+
+<p>Templates cannot contain scripts and cannot reference third party stylesheets, however stylesheets can be uploaded as assets.</p>
+
 <h2 id="handlebars-syntax">Handlebars syntax</h2>
 
 <p>We support a subset of <a href="http://handlebarsjs.com/">Handlebars</a> syntax for templates.</p>

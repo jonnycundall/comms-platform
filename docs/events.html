@@ -18,12 +18,14 @@
 
 <h3 id="deliverto---customer-vs-non-customer-comms">DeliverTo - customer vs non-customer comms</h3>
 
-<p>As part of the metadata, you need to specify the <code class="highlighter-rouge">deliverTo</code> field. You can provide one of two things:</p>
+<p>As part of the metadata, you need to specify the <code class="highlighter-rouge">deliverTo</code> field. In case of SMS and email, you can provide either as <code class="highlighter-rouge">Customer</code> or <code class="highlighter-rouge">ContactDetails</code>, for print deliverTo must be a <code class="highlighter-rouge">ContactDetails</code> field:</p>
 
 <ul>
-  <li>A <code class="highlighter-rouge">Customer</code>, containing a global customer ID, if you want to send the comm to an OVO customer.</li>
-  <li>A <code class="highlighter-rouge">ContactDetails</code>, if you want to send the comm to an arbitrary recipient. You must provide an email address, a mobile phone number (for SMS) or both.</li>
+  <li>A <code class="highlighter-rouge">Customer</code>, containing a global customer ID, if you want to send the comm to an OVO customer. Currently not available for print.</li>
+  <li>A <code class="highlighter-rouge">ContactDetails</code>, if you want to send the comm to an arbitrary recipient. You must provide details of at least one of the three channels.</li>
 </ul>
+
+<p>As customers cannot be referenced by the global customer ID for print templates, if required any additional information about the customer, such as first name, last name, it has to be included in the template data.</p>
 
 <h3 id="building-the-event">Building the event</h3>
 
