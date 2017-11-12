@@ -1,0 +1,112 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="assets/boostWellcome.css">
+</head>
+
+<body>
+
+<footer>
+    <div class="footerData floatLeft">
+        <div>OVO Energy Ltd, trading as Boost</div>
+        <div>1 Rivergate, Temple Quay, Bristol BS1 6ED</div>
+    </div>
+    <div class="footerData floatLeft">
+        <div>Registered in England and Wales No. 06890795</div>
+        <div>VAT No. 100119879. OVO Energy is a FIT licensee</div>
+    </div>
+</footer>
+
+<div class="letterHeader">
+    <div id="logo" class="logo">
+        <span>boost</span>
+    </div>
+
+    <div class="ovoAddress">
+        <b>Boost</b></br>
+        1 Rivergate,Temple Quay, Bristol, BS1 6ED</br>
+        hello@boostpower.co.uk | www.boostpower.co.uk</br>
+        T. 0800 408 4722
+    </div>
+
+    <div class="letterAddress" id="letterAddress">
+        <div class="addressLines">
+            Dear {{firstName}} {{lastName}}<br>
+            {{address.line1}}<br>
+            {{address.town}}<br>
+            {{address.county}}<br>
+            {{address.postcode}}
+        </div>
+    </div>
+
+    <div class="ids">
+        <div>Date: 23 August 2017</div>
+        <div>Account Number: 1234567</div>
+    </div>
+</div>
+
+<div class="letterBody">
+    <h2>Welcome to Boost! <br>
+        Here’s your contract and what to expect next</h2>
+
+    <p>Hello {{firstName}}.</p>
+
+    <p>
+        Thanks for choosing Boost. This letter includes your contract and explains what happens next.
+        Please read everything carefully. It's also important to check your meter details so we switch the right person:
+    </p>
+
+    <div class="supplyPoints">
+        <div class="supplyPointsElement floatLeft">
+            MPAN for electricity: 0000000000000
+        </div>
+        <div class="supplyPointsElement floatRight">
+            MPRN for gas: 0000000000
+        </div>
+    </div>
+
+    <p>There's help to find these numbers at <b>switch.which.co.uk/energy-advice/understanding-your-energy-bill.html</b></p>
+
+    <div class="details">
+        <div>
+            <h5>Essential details</h5>
+
+            <div class="column">
+                <ul>
+                    <li>You’ve chosen the <b>Smart PAYG (All online)</b> plan</li>
+                    <li>You’re on our variable tariff</li>
+                    <li>This is a variable rate plan so prices can go up or down</li>
+                </ul>
+            </div>
+
+            <div class="column">
+                <ul>
+                    <li>To cancel, call anytime before <b>24 July 2017</b></li>
+                    <li>We will start supplying your energy on <b>27 July 2017</b></li>
+                    <li>You can always find up-to-date plan information at <b>www.boostpower.co.uk</b></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <p>Find full Terms & Conditions enclosed, and at <b>www.boostpower.co.uk/terms</b></p>
+
+        <h4>Topping up, keys and cards</h4>
+        We'll send you a new payment key for your electricity meter soon – and a payment card for your gas meter if your gas supply comes from us too. They'll arrive in the post no later than 2 days before you start getting your energy from us, but there are some important things to know first.
+    </div>
+
+    <div class="enhancedOrderedList">
+        <ol>
+            <li><span>Start using your top-up key or card on your switch date, as it’ll be set and ready to go with your new Boost rates.</span></li>
+            <li><span>As you start to get close to your Boost start date, avoid making any big top-ups with your old key and card, as you could lose this credit when you register your new ones.</span></li>
+            <li><span>You can top up at any PayPoint. We'll include instructions with your new key and card on how to register them before topping up.</span></li>
+            <li><span>If you have remaining credit when you register your key or card, you can contact your old supplier for a refund.</span></li>
+            <li><span>If you already have a smart meter, we'll send you a different type of payment card and instructions on how to register it.</span></li>
+        </ol>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -142,6 +142,13 @@ Similarly to email, a print template can also reference optional assets, however
 
 Templates cannot contain scripts and cannot reference third party stylesheets, however stylesheets can be uploaded as assets.
 
+##### Use Cases
+
+Ovo Contract letter:
+[letter](../printSamples/ovoContract.pdf) | [html](../printSamples/ovoContractHtml) | [css](../printSamples/ovoContractCSS)
+
+Boost Wellcome letter: 
+[letter](../printSamples/boostWellcome.pdf) | [html](../printSamples/boostWellcomeHtml) | [css](../printSamples/boostWellcomeCSS)
 
 ## Handlebars syntax
 
