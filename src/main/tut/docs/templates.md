@@ -144,11 +144,18 @@ Templates cannot contain scripts and cannot reference third party stylesheets, h
 
 ##### Use Cases
 
-Ovo Contract letter:
-[letter](../printSamples/ovoContract.pdf) | [html](../printSamples/ovoContractHtml) | [css](../printSamples/ovoContractCSS)
+###### Ovo Contract letter:
 
-Boost Wellcome letter: 
-[letter](../printSamples/boostWellcome.pdf) | [html](../printSamples/boostWellcomeHtml) | [css](../printSamples/boostWellcomeCSS)
+![ovo](../img/ovoContract.png)
+
+[letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.zip)
+
+
+###### Boost Wellcome letter: 
+
+![boost](../img/boostWellcome.png)
+
+[letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.zip)
 
 ## Handlebars syntax
 
