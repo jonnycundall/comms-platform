@@ -146,14 +146,14 @@ Templates cannot contain scripts and cannot reference third party stylesheets, h
 
 ###### Ovo Contract letter:
 
-![ovo](../img/ovoContract.png)
+<img src="https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.jpg" width="231" height="319" style="border: 1px solid lightgray">
 
 [letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.zip)
 
 
 ###### Boost Wellcome letter: 
 
-![boost](../img/boostWellcome.png)
+<img src="https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.jpg" width="231" height="319" style="border: 1px solid lightgray">
 
 [letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.zip)
 
