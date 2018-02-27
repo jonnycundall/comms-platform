@@ -1,0 +1,35 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/comms-platform
+    machine: true
+
+    steps:
+      - checkout
+
+      - save_cache:
+          key: "{{ .Environment.CIRCLE_PROJECT_REPONAME }}-credstash"
+          paths:
+            - "~/.sbt"
+            - "target/resolution-cache"
+            - "project/target/resolution-cache"
+
+      - run: gem install jekyll
+      - run: sbt makeMicrosite
+
+      - deploy:
+          name: Deploy if master branch
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" -a "${CIRCLE_PROJECT_USERNAME}" == "ovotech" ]; then
+              git config --global user.email "hello.comms@ovoenergy.com"
+              git config --global user.name "OVO Comms CircleCI"
+              git config --global push.default simple
+              sbt publishMicrosite
+            fi
+
+experimental:
+  notify:
+    branches:
+      only:
+        - master
