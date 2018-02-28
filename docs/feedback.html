@@ -1,0 +1,160 @@
+<html><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><title>OVO Comms Platform</title><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="comms-platform" /><meta name="author" content="Comms team" /><meta name="og:image" content="/comms-platform/img/poster.png" /><meta name="og:title" content="OVO Comms Platform" /><meta name="og:site_name" content="OVO Comms Platform" /><meta name="og:url" content="https://ovoenergy.slack.com/messages/hello_comms/" /><meta name="og:type" content="website" /><meta name="og:description" content="comms-platform" /><meta name="twitter:image" content="/comms-platform/img/poster.png" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:site" content="" /><link rel="icon" type="image/png" href="/comms-platform/img/favicon.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/comms-platform/highlight/styles/default.css" /><link rel="stylesheet" href="/comms-platform/css/style.css" /><link rel="stylesheet" href="/comms-platform/css/palette.css" /><link rel="stylesheet" href="/comms-platform/css/docs.css" /><link rel="stylesheet" href="/comms-platform/css/home.css" /></head><body class="docs"><div id="wrapper"><div id="sidebar-wrapper"><ul id="sidebar" class="sidebar-nav"><li class="sidebar-brand"><a href="/comms-platform/" class="brand"><div class="brand-wrapper" style="background:url('/comms-platform/img/sidebar_brand.png') no-repeat"><span>OVO Comms Platform</span></div></a></li> <li><a href="/comms-platform/docs/index.html" class="">Getting Started</a></li> <li><a href="/comms-platform/docs/templates.html" class="">Templates</a></li> <li><a href="/comms-platform/docs/events.html" class="">Events</a></li> <li><a href="/comms-platform/docs/scheduling.html" class="">Scheduling</a></li> <li><a href="/comms-platform/docs/channels.html" class="">Channels</a></li> <li><a href="/comms-platform/docs/feedback.html" class=" active ">Feedback</a></li></ul></div><div id="page-content-wrapper"><div class="nav"><div class="container-fluid"><div class="row"><div class="col-lg-12"><div class="action-menu pull-left clearfix"><a href="#menu-toggle" id="menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a></div><ul class="pull-right"><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-eye"></i><span>WATCH<span id="eyes" class="label label-default">--</span></span></a></li><li class="hidden-xs"><a href="https://github.com/ovotech/comms-platform"><i class="fa fa-star-o"></i><span>STARS<span id="stars" class="label label-default">--</span></span></a></li><li><a href="#" onclick="shareSiteTwitter('OVO Comms Platform comms-platform');"><i class="fa fa-twitter"></i></a></li><li><a href="#" onclick="shareSiteFacebook('OVO Comms Platform comms-platform');"><i class="fa fa-facebook"></i></a></li><li><a href="#" onclick="shareSiteGoogle();"><i class="fa fa-google-plus"></i></a></li></ul></div></div></div></div><div id="content" data-github-owner="ovotech" data-github-repo="comms-platform"><div class="content-wrapper"><section><h1 id="feedback">Feedback</h1>
+
+<p>The Comms Platform offers the following topics for feedback on outcomes of issued communications.</p>
+
+<p><br /></p>
+
+<h2 id="email">Email</h2>
+<p>Produced when the Comms Platform had successfully sent the communication to its third party email delivery service (Mailgun) and recevied a feedback from it.</p>
+
+<h4 id="topics-to-consume">Topics to consume</h4>
+
+<p><strong>1. Email Progressed</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/email/EmailProgressedV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.progressed.email.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>EmailProgressedV2(
+    metadata: MetadataV2,
+    internalMetadata: InternalMetadata,
+    status: EmailStatus,
+    gateway: Gateway,
+    gatewayMessageId: Option[String] = None,
+    reason: Option[String] = None
+)
+</code></pre></div></div>
+
+<h5 id="status-values">status values:</h5>
+<ul>
+  <li><strong>Queued:</strong> your comm has been accepted by our third party message provider and the message has been placed in queue.</li>
+  <li><strong>Dropped:</strong> your comm was not delivered to the recipient email server.</li>
+  <li><strong>Bounced:</strong> your comm has been rejected by the recipient SMTP server.</li>
+  <li><strong>Delivered:</strong> your comm was sent and it was accepted by the recipient email server.</li>
+  <li><strong>Opened:</strong> the email recipient opened the email and enabled image viewing.</li>
+</ul>
+
+<p><br /></p>
+
+<p><strong>2. Link Clicked</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/LinkClickedV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.link.clicked.v2</code></p>
+
+<p>event structure:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LinkClickedV2(
+    metadata: MetadataV2,
+    internalMetadata: InternalMetadata,
+    gateway: Gateway,
+    url: String
+)
+</code></pre></div></div>
+
+<p><br /><br /></p>
+<h2 id="sms">SMS</h2>
+<p>Produced when the Comms Platform had successfully sent the communication to its third party sms delivery service (Twilio) and received a feedback from it.</p>
+
+<h4 id="topics-to-consume-1">Topics to consume</h4>
+
+<p><strong>1. SMS Progressed</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/sms/SMSProgressedV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.progressed.sms.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SMSProgressedV2(
+    metadata: MetadataV2,
+    internalMetadata: InternalMetadata,
+    status: SMSStatus,
+    gateway: Gateway,
+    gatewayMessageId: String,
+    reason: Option[String] = None
+)
+</code></pre></div></div>
+
+<h5 id="status-values-1">status values:</h5>
+<ul>
+  <li><strong>Accepted:</strong> your comm has been accepted by our third party party message provider.</li>
+  <li><strong>Queued:</strong> your comms is queued for delivery.</li>
+  <li><strong>Sent:</strong> your comms was successfully accepted by the nearest upstream carrier.</li>
+  <li><strong>Delivered:</strong> we received confirmation of message delivery from the upstream carrier.</li>
+  <li><strong>Undelivered:</strong> we received a delivery receipt indicating that the message was not delivered. This can happen for a number of reasons including carrier content filtering, availability of the destination handset, etc.</li>
+  <li><strong>Failed:</strong> The message could not be sent. This can happen for various reasons including queue overflows, account suspension. Charges for failed messages do not apply.</li>
+</ul>
+
+<p><br /><br /></p>
+<h2 id="print">Print</h2>
+<p>Produced when the Comms Platform had successfully sent the communication to its third party printer service (Stannp).</p>
+
+<h4 id="topics-to-consume-2">Topics to consume</h4>
+
+<p><strong>1. Issued For Delivery</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/IssuedForDeliveryV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.issued.for.delivery.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IssuedForDeliveryV2(
+    metadata: MetadataV2,
+    internalMetadata: InternalMetadata,
+    channel: Channel,
+    gateway: Gateway,
+    gatewayMessageId: String
+) 
+</code></pre></div></div>
+<p><br /><br /></p>
+<h2 id="internally-failed-comms">Internally failed comms</h2>
+
+<p>Produced when the Comms Platform cannot process a triggered communication. This can be caused by a wide variety of problems, the details of which are specified by the human readable reason and errorCode.</p>
+
+<h4 id="topics-to-consume-3">Topics to consume</h4>
+
+<p><strong>1. Failed</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/FailedV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.failed.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FailedV2(
+    metadata: MetadataV2,
+    internalMetadata: InternalMetadata,
+    reason: String,
+    errorCode: ErrorCode
+)
+</code></pre></div></div>
+<p><br /><br /></p>
+<h2 id="cancelled-comms">Cancelled comms</h2>
+
+<p>Produced when a scheduled comm is cancelled before being delivered.</p>
+
+<h4 id="topics-to-consume-4">Topics to consume</h4>
+
+<p><strong>1. Cancelled</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/CancelledV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.cancelled.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CancelledV2(
+    metadata: MetadataV2,
+    cancellationRequested: CancellationRequestedV2
+)
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>2. Cancellation Failed</strong> <a href="https://github.com/ovotech/comms-kafka-messages/blob/master/modules/core/src/main/scala/com/ovoenergy/comms/model/FailedCancellationV2.scala">(view on GitHub)</a></p>
+
+<p>topic name: <code class="highlighter-rouge">comms.failed.cancellation.v2</code></p>
+
+<p>event structure:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FailedCancellationV2(
+    metadata: GenericMetadataV2,
+    cancellationRequested: CancellationRequestedV2,
+    reason: String
+)
+</code></pre></div></div>
+</section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/comms-platform/highlight/highlight.pack.js"></script><script>hljs.configure({
+languages:['scala','java','bash']
+});
+hljs.initHighlighting();
+             </script><script src="/comms-platform/js/main.js"></script></body></html>
