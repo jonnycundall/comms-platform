@@ -13,3 +13,6 @@ options:
 
   - title: Channels
     url: docs/channels.html
+
+  - title: Feedback
+    url: docs/feedback.html
