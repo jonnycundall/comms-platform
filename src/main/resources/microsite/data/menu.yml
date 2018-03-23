@@ -16,3 +16,6 @@ options:
 
   - title: Feedback
     url: docs/feedback.html
+    
+  - title: REST API
+    url: http://api-doc.ovo-comms.co.uk
