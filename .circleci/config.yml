@@ -3,12 +3,15 @@ version: 2
 jobs:
   build:
     working_directory: ~/comms-platform
-    machine: true
+    docker:
+      - image: circleci/openjdk:8-jdk-node-browsers
 
     steps:
       - checkout
 
-      - run: gem install jekyll
+      - run: sudo apt-get install -y ruby ruby-dev make gcc g++
+      
+      - run: sudo gem install jekyll
       
       - restore_cache:
           keys:
