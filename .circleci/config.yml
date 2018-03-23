@@ -8,14 +8,24 @@ jobs:
     steps:
       - checkout
 
+      - run: gem install jekyll
+      
+      - restore_cache:
+          keys:
+            - deps-{{ .Branch }}-{{ .Revision }}
+            - deps-{{ .Branch }}
+            - deps
+            
+      - run: sbt update
+      
       - save_cache:
-          key: "{{ .Environment.CIRCLE_PROJECT_REPONAME }}-credstash"
+          key: deps-{{ .Branch }}-{{ .Revision }}
           paths:
+            - "~/.ivy2"
             - "~/.sbt"
             - "target/resolution-cache"
             - "project/target/resolution-cache"
-
-      - run: gem install jekyll
+      
       - run: sbt makeMicrosite
 
       - deploy:
