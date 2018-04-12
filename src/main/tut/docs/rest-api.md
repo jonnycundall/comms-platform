@@ -15,3 +15,6 @@ The REST API allows to send communications without the need of using Kafka.
 * The RAML documentation is available at: [http://api-doc.ovo-comms.co.uk](http://api-doc.ovo-comms.co.uk)
 
 
+# Authentication
+Requests to send communication via the API have to be authenticated by the Identity platform.
+To find out more about obtaining an access token visit the documentation of the Identity platform at: [https://sites.google.com/ovoenergy.com/identity](https://sites.google.com/ovoenergy.com/identity)
