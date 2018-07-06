@@ -8,7 +8,7 @@ title: "Getting Started"
 In order to start sending comms using the platform, you will need two things:
 
 1. A template. See the [templates](templates.html) page for information on how to write and publish templates.
-2. Some code to send an event to a Kafka topic in order to trigger delivery of your comm. See the [events](events.html) page for information about what the event contains and how to build and send one.
+2. Some code to send an HTTP request to our REST API in order to trigger delivery of your comm. See the [REST API](rest-api.html) page for information about what the request contains. You can check out the [comms-example-trigger](https://github.com/ovotech/comms-example-trigger) project to see how to send a request.
 
 ## How the comms platform works
 
