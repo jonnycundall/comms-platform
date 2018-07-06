@@ -6,7 +6,7 @@ title: "Events"
 # Events
 
 <div class="alert alert-danger">
-    Please note that triggering communications via Kafka events is depricated.
+    Please note that triggering communications via Kafka events is deprecated.
 </div> 
 
 Communications can be triggered via our REST API, find out more [here](rest-api.html)

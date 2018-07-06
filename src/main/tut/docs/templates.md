@@ -28,13 +28,14 @@ A comm template is a directory on S3 that adheres to the following structure.
 Let's go through some of that terminology.
 
 ### template id
-A unique id for the template, generated at the time of publishing a new template. This id required in the HTTP request to trigger a comm, find out more about the REST API [here](rest-api.md). 
+A unique id for the template, generated at the time of publishing a new template. This id is required in the HTTP request to trigger a comm, find out more about the REST API [here](rest-api.md). 
 
 The template id is displayed under the template name in the [Template Manager App](https://templates.ovo-comms.co.uk). 
+![Template ID in Template Manager](../img/templateId.png)
 
 ### brand
 Every template is assigned to a brand. The following brands are currently configured:
-* Ovo
+* OVO
 * Boost
 * Lumo
 * Corgi
