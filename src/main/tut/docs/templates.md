@@ -41,7 +41,7 @@ Every template is assigned to a brand. The following brands are currently config
 * Corgi
 * VNet
  
-This enables the cost of each communication to be charged to the sending brand.
+This paves the way for future work to enable us to send SMS messages from the brand associated with the given comm, using an alphanumeric sender relevant to the specific brand. For more information on this please see the [SMS section](sms.html).
 
 ### comm-type
 
