@@ -5,6 +5,13 @@ title: "Events"
 
 # Events
 
+<div class="alert alert-danger">
+    Please note that triggering communications via Kafka events is deprecated.
+</div> 
+
+Communications can be triggered via our REST API, find out more [here](rest-api.html)
+
+
 ## TriggeredV3
 
 In order to send a comm to a customer, you need to trigger the comm by sending a `TriggeredV3` event to the `comms.triggered.v3` Kafka topic.

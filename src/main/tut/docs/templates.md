@@ -27,6 +27,22 @@ A comm template is a directory on S3 that adheres to the following structure.
 
 Let's go through some of that terminology.
 
+### template id
+A unique id for the template, generated at the time of publishing a new template. This id is required in the HTTP request to trigger a comm, find out more about the REST API [here](rest-api.md). 
+
+The template id is displayed under the template name in the [Template Manager App](https://templates.ovo-comms.co.uk). 
+![Template ID in Template Manager](../img/templateId.png)
+
+### brand
+Every template is assigned to a brand. The following brands are currently configured:
+* OVO
+* Boost
+* Lumo
+* Corgi
+* VNet
+ 
+This paves the way for future work to enable us to send SMS messages from the brand associated with the given comm, using an alphanumeric sender relevant to the specific brand. For more information on this please see the [SMS section](sms.html).
+
 ### comm-type
 
 Comms are broadly categorised by their type. The main reason for doing this is so that different comms of the same type can share things like a common header and footer, in order to provide a consistent look and feel.
@@ -35,7 +51,7 @@ The currently supported categories are `Service`, `Regulatory` and `Marketing`.
 
 ### comm-name
 
-This is the unique name for your comm. It's an arbitrary string that you get to decide.
+It's an arbitrary string that you get to decide.
 
 ### version
 
@@ -43,119 +59,8 @@ Templates are versioned, and every published version of a comm is immutable. So 
 
 ### Channels
 
-Currently email and SMS channels are supported and you must provide either an email template, an SMS template or both. 
+Currently email, SMS and print channels are supported and you must provide either an email template, an SMS template, a print template or a combination of these three. 
 
-#### Email
-
-An email template consists of up to four template files:
-
-* `subject.txt` is a Handlebars template for the email subject
-* `body.html` is a Handlebars template for the HTML body
-* `body.txt` is a Handlebars template for the text body. This file is optional. If it is present, your comm will be sent as a multipart email with both HTML and text bodies.
-* `sender.txt` is a custom sender in the format `Name <custom.address@ovoenergy.com>`. This file is optional. If it is not present, a default sender will be used.
-
-As well as optional assets.
-
-##### Assets
-
-Any assets you want to publish with your email should be placed in the `email/assets` directory and any references to the assets in your email should be relational from the email folder to the assets directory.
-
-For example if you add the following asset `email/assets/images/image1.png` then you would refer to the image with something like:
-* `<img src="assets/images/image1.png" width="70" height="70" alt="My image" style="display:block; border:none; font-family:Arial, Helvetica, sans-serif; font-size:10px" border="0" />`
-
-When your template is published the assets are placed in a public S3 repo and the links in the template are rewritten accordingly.
-
-#### SMS
-
-An SMS template consists of a single template file:
-
-* `body.txt` is a Handlebars template for the text of the message
-
-The sender of the SMS is currently set by the platform. 
-
-More on channels [here](channels.html).
-
-#### Print
-A Print template consists of a single template file:
-* `body.html` is a Handlebars template for the content of the letter
-
-##### Address
-Print templates must include a div element with the id set to letterAddress. 
-This element has the following mandatory and optional fields:
-* Mandatory	
-    - line 1
-    - postcode
-    - town
-    - county
-* Optional
-    - line 2
-    - country
-			
-
-##### Footers
-
-To add footer for every page of a letter, the content of the footer has to be encapsulated by the <footer> tag. It is important that the <footer> element has to be the first element in the body. 
-
-The bottom margin of the pages have to be offset by the height of the footer, by adding the `@page {margin-bottom: 30mm;}` css rule to the `<style>` element in the head of the template. For a 30mm high footer this will look the following: 
-
-```
-<head>
-    <meta charset="utf-8" />
-
-    <style>
-        @page {
-            margin-bottom: 30mm;
-        }
-    </style>
-</head>
-
-```
-
-##### Page Breaks
-As the content of the letter is broke into pages when rendering, in case the last element on a page exceeds the remaining space at the bottom of the page, the element is split and overflows to the next page. 
-
-By adding the `break-inside: avoid` parameter to the style of the element we can avoid the element being split over two pages and enforce the entire element to be placed onto the next page. 
-
-##### Colours
-Letters are printed on industrial printers which work with CMYK colour encoding. 
-
-To ensure that the printed document stylistically consistent, colours in print templates have to be CMYK encoded. For example: 
-```
-h1 {
-    color: cmyk(83%, 10%, 100%, 1%);
-    font-weight:normal;
-    font-size: 18px;
-}
-
-.infoBox {
-    border-radius: 10px;
-    border: solid cmyk(30%, 0%, 40%, 0%) 2px;
-    padding: 10px;
-    padding-top: 0px;
-}
-```
-
-##### Assets
-Similarly to email, a print template can also reference optional assets, however images have to meet the following criterias:  
- - encoded in one of the following CMYK colourspace supporting formats: tif, tiff, jpg, jpeg. 
- - its size is set to ensure that it fits onto a page, if an image is wider or higher than the page, the template will be rejected.
-
-Templates cannot contain scripts and cannot reference third party stylesheets, however stylesheets can be uploaded as assets.
-
-##### Use Cases
-
-###### Ovo Contract letter:
-
-<img src="https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.jpg" width="231" height="319" style="border: 1px solid lightgray">
-
-[letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContractCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/ovoContract.zip)
-
-
-###### Boost Wellcome letter: 
-
-<img src="https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.jpg" width="231" height="319" style="border: 1px solid lightgray">
-
-[letter](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.pdf) | [html](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeHtml) | [css](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcomeCSS) | [zip](https://s3-eu-west-1.amazonaws.com/dev-ovo-comms-template-assets/samples/boostWellcome.zip)
 
 ## Handlebars syntax
 
@@ -268,6 +173,10 @@ Some example file structures for the zip file could be:
  
  * `/sms/body.txt`
  
+#### Print only
+ * `/print/body.html`
+ * `/print/assets/images/someImage.png`
+ 
 #### Email and SMS
 
 Could be as simple as:
@@ -275,6 +184,13 @@ Could be as simple as:
  * `/email/subject.txt`
  * `/email/body.html`
  * `/sms/body.txt`
+ 
+#### Email, SMS and Print
+ 
+ * `/email/subject.txt`
+ * `/email/body.html`
+ * `/sms/body.txt`
+ * `/print/body.html`
  
 ## Environments 
 

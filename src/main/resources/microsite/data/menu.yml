@@ -4,18 +4,27 @@ options:
 
   - title: Templates
     url: docs/templates.html
+    menu_section: templates
 
-  - title: Events
-    url: docs/events.html
+    nested_options:
+         - title: Email
+           url: docs/templates/email.html
+         - title: SMS
+           url: docs/templates/sms.html
+         - title: Print
+           url: docs/templates/print.html
 
-  - title: Scheduling
-    url: docs/scheduling.html
+  - title: REST API
+    url: docs/rest-api.html
 
   - title: Channels
     url: docs/channels.html
 
   - title: Feedback
     url: docs/feedback.html
-    
-  - title: REST API
-    url: docs/rest-api.html
+
+  - title: Scheduling
+    url: docs/scheduling.html
+
+  - title: Events
+    url: docs/events.html
