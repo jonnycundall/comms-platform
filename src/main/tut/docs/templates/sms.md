@@ -9,6 +9,22 @@ An SMS template consists of a single template file:
 
 * `body.txt` is a Handlebars template for the text of the message
 
-The sender of the SMS currently always appears to the recipient as "OVO Energy". In the future this will be dependant on the brand associated with the template, if you're interested to hear more about the progress of this feel free to speak to the team on our slack channel #hello_comms. 
+The alphanumeric sender of the SMS as it appears to the recipient of the message is dependant on the brand associated with the template when you upload it (more about templates [here](templates.html)). The senders for each brand currently appear as follows:
 
-More on channels [here](channels.html).
+|Brand  | SMS Sender ID|
+|-------|--------------|
+|OVO    | OVO Energy   |
+|----------------------|
+|Boost  | Boost Power  |
+|----------------------|
+|Corgi  | Corgi  	   |
+|----------------------|
+|VNet   | VNet         |
+|----------------------|
+|Lumo   | Lumo Energy  |
+|----------------------|
+
+
+If the senders specified above don't fit the needs of your brand, feel free to reach out to the team on slack at #hello_comms
+
+Want to send via other channels? More on the channels available [here](channels.html).
