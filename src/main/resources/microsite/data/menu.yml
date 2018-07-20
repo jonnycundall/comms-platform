@@ -2,6 +2,9 @@ options:
   - title: Getting Started
     url: docs/index.html
 
+  - title: News & Updates
+    url: docs/news.html
+
   - title: Templates
     url: docs/templates.html
     menu_section: templates
