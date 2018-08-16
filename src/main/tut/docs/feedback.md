@@ -26,9 +26,10 @@ case class Feedback(
 ```
 
 #### Status values
-- **Scheduled** : Produced when your communication has been scheduler for future delivery.
+- **Scheduled** : Produced when your communication has been scheduled for future delivery.
 - **Pending** : Produced when your communication  has been accepted by the relevant third party party message provider.
 - **Delivered** : Produced when we have confirmation of message delivery from the upstream carrier, usually a third party message provider.
 - **Failed** : Produced when the Comms Platform cannot process a triggered communication. This can be caused by a wide variety of problems, the details of which are specified by the human readable `description`.
 - **Cancelled** : Produced when a scheduled communication is cancelled before being delivered.
 - **FailedCancellation** : Produced when the Comms Platform is unable to cancel a communication.
+- **Expired** : Produced when a scheduled message could not be sent before its expiry date.
