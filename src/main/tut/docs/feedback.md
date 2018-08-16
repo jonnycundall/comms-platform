@@ -33,3 +33,16 @@ case class Feedback(
 - **Cancelled** : Produced when a scheduled communication is cancelled before being delivered.
 - **FailedCancellation** : Produced when the Comms Platform is unable to cancel a communication.
 - **Expired** : Produced when a scheduled message could not be sent before its expiry date.
+
+#### Email feedback
+
+The `email` field _may_ be be defined when `channel` is `Email`, but it _cannot_ be defined otherwise. It contains additional feedback you can get for emails, namely:
+- **Opened** : the recipient has opened the email
+- **Interacted** : the recipient has clicked on a link in the email.
+
+
+### Note
+
+The feedback topic contains both messages indicating _progress_ or _feedback_, and messages indicating _outcome_.
+In particular a `Status` of `Failed`, `Delivered` or `Cancelled` indicates _outcome_, every other message indicates _progress_ or _feedback_.
+The `EmailStatus` messages in particular represent _feedback_ in that you can receive them after the the communication has been `Delivered`, but they don't affect the state of the platform.
