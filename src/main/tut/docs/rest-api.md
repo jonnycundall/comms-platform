@@ -17,4 +17,5 @@ The REST API allows to send communications without the need of using Kafka.
 
 # Authentication
 Requests to send communication via the API have to be authenticated by the Identity platform.
-To find out more about obtaining an access token visit the documentation of the Identity platform at: [https://sites.google.com/ovoenergy.com/identity](https://sites.google.com/ovoenergy.com/identity)
+To find out more about using an access token visit the documentation of the Identity platform at: [https://sites.google.com/ovoenergy.com/identity](https://sites.google.com/ovoenergy.com/identity).
+In order to request an access token use the [google form](https://goo.gl/forms/8QcklaZowhaE2cnz1).
