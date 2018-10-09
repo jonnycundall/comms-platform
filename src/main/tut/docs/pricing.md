@@ -1,3 +1,10 @@
+---
+layout: docs
+title: "Pricing"
+---
+
+#Pricing structure
+
 The cost of comms in the platform is currently pretty low so there is not a billing structure in place at the moment. 
 
 For future reference the cost of comms is:
