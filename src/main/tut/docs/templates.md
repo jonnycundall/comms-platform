@@ -5,7 +5,7 @@ title: "Templates"
 
 # Templates
 
-In order to send comms, you will need a template.
+In order to send comms, you will need a template. Don't know anything about html? If you are doing a fairly standard template then there is no need to outsource your email building, click [here](htmlexamples.md) for a kickstart guide
 
 ## Directory structure
 
