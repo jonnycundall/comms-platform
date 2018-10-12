@@ -16,11 +16,13 @@ The Comms Platform offers a unified topic for feedback on outcomes of issued com
 ```scala
 case class Feedback(
     commId: String,
+    commDescription: Option[String],
     customer: Option[Customer],
     status: FeedbackStatus,
     description: Option[String],
     email: Option[EmailFeedback],
     channel: Option[Channel],
+    templateManifest: Option[TemplateManifest],
     metadata: EventMetadata
 )
 ```
