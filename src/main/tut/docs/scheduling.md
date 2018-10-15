@@ -5,11 +5,11 @@ title: "Scheduling"
 
 # Scheduling
 
-Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV3 event (see the [events](events.html) page for more info on triggered events).
+Our platform supports the scheduling of comms. This enables you to optionally specify a date and time when you want a comm to be delivered and an expiry date for when a comm will no longer be relevant when sending a TriggeredV3 event (see the [events](events.md) page for more info on triggered events).
  
 # How do I schedule a comm?
 
-When generating a TriggeredV3 event ([as explained in the events page](events.html)), simply include the date and time you want the comm to be delivered. The timestamp is represented as a `java.time.Instant` in the Scala model, and as timestamp-millis in Avro.
+When generating a TriggeredV3 event ([as explained in the events page](events.md)), simply include the date and time you want the comm to be delivered. The timestamp is represented as a `java.time.Instant` in the Scala model, and as timestamp-millis in Avro.
  
 ```tut:silent
 import com.ovoenergy.comms.model._
